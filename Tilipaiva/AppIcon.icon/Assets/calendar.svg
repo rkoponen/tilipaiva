@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <rect x="352" y="136" width="64" height="184" rx="32" fill="#ffffff"/>
+  <rect x="608" y="136" width="64" height="184" rx="32" fill="#ffffff"/>
+  <path
+     fill="#ffffff"
+     fill-rule="evenodd"
+     d="M312 200 h400 a112 112 0 0 1 112 112 v488 a112 112 0 0 1 -112 112 h-400 a112 112 0 0 1 -112 -112 v-488 a112 112 0 0 1 112 -112 z
+        M320 344 h384 a48 48 0 0 1 48 48 v400 a48 48 0 0 1 -48 48 h-384 a48 48 0 0 1 -48 -48 v-400 a48 48 0 0 1 48 -48 z"/>
+  <circle cx="512" cy="592" r="104" fill="#ffffff"/>
+</svg>

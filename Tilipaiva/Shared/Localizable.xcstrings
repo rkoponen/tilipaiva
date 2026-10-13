@@ -1,0 +1,490 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "%lld days" : {
+      "comment" : "Days until the next payment, e.g. \"12 days\". The placeholder is the number of days.",
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld day"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld days"
+                }
+              }
+            }
+          }
+        },
+        "fi" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld päivä"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld päivää"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "About" : {
+      "comment" : "Accessibility label of the button that opens the app information sheet.",
+      "localizations" : {
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tietoja"
+          }
+        }
+      }
+    },
+    "Add a salary or Kela benefit to see your next payday." : {
+      "comment" : "Description in the empty state when no payment sources have been added.",
+      "localizations" : {
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lisää palkka tai Kela-etuus, niin näet seuraavan maksupäivän."
+          }
+        }
+      }
+    },
+    "Add Source" : {
+      "comment" : "Title of the sheet for adding a payment source, and the label of the add button.",
+      "localizations" : {
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lisää tulolähde"
+          }
+        }
+      }
+    },
+    "Adjustment" : {
+      "comment" : "How a fixed payment day moves when it is not a banking day.",
+      "localizations" : {
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Siirto"
+          }
+        }
+      }
+    },
+    "Benefit" : {
+      "comment" : "Payment source kind for a Kela benefit.",
+      "localizations" : {
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kela-etuus"
+          }
+        }
+      }
+    },
+    "Cancel" : {
+      "comment" : "Button that dismisses the source editor without saving.",
+      "localizations" : {
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Peruuta"
+          }
+        }
+      }
+    },
+    "Day" : {
+      "comment" : "Label for the day-of-month picker in a payday rule.",
+      "localizations" : {
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Päivä"
+          }
+        }
+      }
+    },
+    "days" : {
+      "comment" : "Abbreviated unit label beneath the day count in the Lock Screen circular widget.",
+      "localizations" : {
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "pv"
+          }
+        }
+      }
+    },
+    "Day of month" : {
+      "comment" : "Payday rule: a fixed day of the month.",
+      "localizations" : {
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kuukauden päivä"
+          }
+        }
+      }
+    },
+    "Done" : {
+      "comment" : "Button that dismisses the app information sheet.",
+      "localizations" : {
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Valmis"
+          }
+        }
+      }
+    },
+    "Edit" : {
+      "comment" : "Accessibility hint for a row that opens the source editor.",
+      "localizations" : {
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Muokkaa"
+          }
+        }
+      }
+    },
+    "Edit Source" : {
+      "comment" : "Title of the sheet for editing an existing payment source.",
+      "localizations" : {
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Muokkaa"
+          }
+        }
+      }
+    },
+    "First banking day" : {
+      "comment" : "Payday rule: the first banking day of the month.",
+      "localizations" : {
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ensimmäinen pankkipäivä"
+          }
+        }
+      }
+    },
+    "Kela benefit" : {
+      "comment" : "Label for the picker that chooses which Kela benefit to track.",
+      "localizations" : {
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kela-etuus"
+          }
+        }
+      }
+    },
+    "Kind" : {
+      "comment" : "Label for the picker that chooses between a salary and a Kela benefit.",
+      "localizations" : {
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tyyppi"
+          }
+        }
+      }
+    },
+    "Last banking day" : {
+      "comment" : "Payday rule: the last banking day of the month.",
+      "localizations" : {
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Viimeinen pankkipäivä"
+          }
+        }
+      }
+    },
+    "Last weekday" : {
+      "comment" : "Payday rule: the last Monday-to-Friday day of the month, holidays included.",
+      "localizations" : {
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kuukauden viimeinen arkipäivä"
+          }
+        }
+      }
+    },
+    "Name" : {
+      "comment" : "Label for the salary name text field.",
+      "localizations" : {
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nimi"
+          }
+        }
+      }
+    },
+    "Next banking day" : {
+      "comment" : "Payment moves forward to the next banking day.",
+      "localizations" : {
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seuraava pankkipäivä"
+          }
+        }
+      }
+    },
+    "Next payments" : {
+      "comment" : "Section header previewing the next payment dates in the source editor.",
+      "localizations" : {
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tulevat maksupäivät"
+          }
+        }
+      }
+    },
+    "No payment sources yet" : {
+      "comment" : "Empty state title when no payment sources have been added.",
+      "localizations" : {
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ei tulolähteitä"
+          }
+        }
+      }
+    },
+    "No payments" : {
+      "comment" : "Shown in the preview when a rule produces no dates.",
+      "localizations" : {
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ei maksuja"
+          }
+        }
+      }
+    },
+    "None" : {
+      "comment" : "No adjustment is applied to a fixed payment day.",
+      "localizations" : {
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ei mitään"
+          }
+        }
+      }
+    },
+    "Nth" : {
+      "comment" : "Ordinal for the Nth banking day or Nth weekday of the month.",
+      "localizations" : {
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "N:s"
+          }
+        }
+      }
+    },
+    "Nth banking day" : {
+      "comment" : "Payday rule: the Nth banking day of the month, e.g. the 2nd banking day.",
+      "localizations" : {
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "N:s pankkipäivä"
+          }
+        }
+      }
+    },
+    "Nth weekday" : {
+      "comment" : "Payday rule: the Nth given weekday of the month, e.g. the 2nd Friday.",
+      "localizations" : {
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "N:s viikonpäivä"
+          }
+        }
+      }
+    },
+    "Payday rule" : {
+      "comment" : "Header of the section that configures when a source pays.",
+      "localizations" : {
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Maksupäiväsääntö"
+          }
+        }
+      }
+    },
+    "Payment days are estimates. Check the up-to-date information in OmaKela." : {
+      "comment" : "Required disclaimer shown wherever Kela payment days appear.",
+      "localizations" : {
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Maksupäivät ovat arvioita. Tarkista ajantasainen tieto OmaKelasta."
+          }
+        }
+      }
+    },
+    "Previous banking day" : {
+      "comment" : "Payment moves back to the previous banking day.",
+      "localizations" : {
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edellinen pankkipäivä"
+          }
+        }
+      }
+    },
+    "Privacy Policy" : {
+      "comment" : "Link to the privacy policy in the app information sheet.",
+      "localizations" : {
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tietosuojakäytäntö"
+          }
+        }
+      }
+    },
+    "Remove Source" : {
+      "comment" : "Destructive button that deletes the payment source being edited.",
+      "localizations" : {
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Poista tulolähde"
+          }
+        }
+      }
+    },
+    "Remove this source?" : {
+      "comment" : "Confirmation dialog title shown before removing a payment source.",
+      "localizations" : {
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Poistetaanko tämä tulolähde?"
+          }
+        }
+      }
+    },
+    "Salary" : {
+      "comment" : "Payment source kind for a salary.",
+      "localizations" : {
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Palkka"
+          }
+        }
+      }
+    },
+    "Save" : {
+      "comment" : "Button that saves the source editor and dismisses it.",
+      "localizations" : {
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tallenna"
+          }
+        }
+      }
+    },
+    "Shows the days until your next payday." : {
+      "comment" : "Description of the widget shown in the widget gallery.",
+      "localizations" : {
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Näyttää päivät seuraavaan maksupäivään."
+          }
+        }
+      }
+    },
+    "Support" : {
+      "comment" : "Link to the support page in the app information sheet.",
+      "localizations" : {
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tuki"
+          }
+        }
+      }
+    },
+    "Tilipäivä" : {
+
+    },
+    "Today!" : {
+      "comment" : "Shown instead of a day count when the payment is today.",
+      "localizations" : {
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tänään!"
+          }
+        }
+      }
+    },
+    "Upcoming" : {
+      "comment" : "Header of the list of upcoming payments on the home screen.",
+      "localizations" : {
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tulevat"
+          }
+        }
+      }
+    },
+    "Version" : {
+      "comment" : "Row label showing the app's version number in the app information sheet.",
+      "localizations" : {
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Versio"
+          }
+        }
+      }
+    },
+    "Weekday" : {
+      "comment" : "Label for the weekday picker in an Nth-weekday payday rule.",
+      "localizations" : {
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Viikonpäivä"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

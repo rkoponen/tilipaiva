@@ -1,0 +1,85 @@
+[
+  {
+    "id" : "kansanelake",
+    "name" : {
+      "fi" : "Kansaneläke",
+      "en" : "National pension"
+    },
+    "rule" : {
+      "type" : "fixedDayOfMonth",
+      "day" : 7,
+      "shift" : "previousBankingDay"
+    }
+  },
+  {
+    "id" : "kuntoutustuki",
+    "name" : {
+      "fi" : "Kuntoutustuki ja työkyvyttömyyseläke",
+      "en" : "Rehabilitation allowance and disability pension"
+    },
+    "rule" : {
+      "type" : "fixedDayOfMonth",
+      "day" : 7,
+      "shift" : "previousBankingDay"
+    }
+  },
+  {
+    "id" : "elatustuki",
+    "name" : {
+      "fi" : "Elatustuki",
+      "en" : "Child maintenance allowance"
+    },
+    "rule" : {
+      "type" : "fixedDayOfMonth",
+      "day" : 10,
+      "shift" : "previousBankingDay"
+    }
+  },
+  {
+    "id" : "lapsilisa",
+    "name" : {
+      "fi" : "Lapsilisä",
+      "en" : "Child benefit"
+    },
+    "rule" : {
+      "type" : "fixedDayOfMonth",
+      "day" : 26,
+      "shift" : "previousBankingDay",
+      "alsoShiftOnWeekdays" : [
+        "monday"
+      ]
+    }
+  },
+  {
+    "id" : "opintotuki",
+    "name" : {
+      "fi" : "Opintoraha ja asumislisä",
+      "en" : "Study grant and housing supplement"
+    },
+    "rule" : {
+      "type" : "fixedDayOfMonth",
+      "day" : 1,
+      "shift" : "nextBankingDay"
+    }
+  },
+  {
+    "id" : "kotihoidontuki",
+    "name" : {
+      "fi" : "Lasten kotihoidon tuki",
+      "en" : "Child home care allowance"
+    },
+    "rule" : {
+      "type" : "lastWeekdayOfMonth"
+    }
+  },
+  {
+    "id" : "hoitoraha",
+    "name" : {
+      "fi" : "Joustava hoitoraha ja osittainen hoitoraha",
+      "en" : "Flexible and partial care allowance"
+    },
+    "rule" : {
+      "type" : "lastBankingDayOfMonth"
+    }
+  }
+]
