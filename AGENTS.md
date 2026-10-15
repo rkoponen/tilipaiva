@@ -125,15 +125,22 @@ Note: `PaymentSource` uses the synthesized Codable, so JSON must include `name`
   light, secondary, dividered list below it. About is a quiet footer link, not a
   top button (only `+` floats top-right).
 - Brand accent is a "payday green" (light `#1F8A5A`, dark `#4FD1A0`); the App
-  Icon is a green calendar with a marked day, made with Icon Composer
-  (`Tilipaiva/AppIcon.icon`).
+  Icon is a sage-green calendar tile with a € disc, made with Icon Composer
+  (`Tilipaiva/AppIcon.icon`). The source artwork is
+  `Tilipaiva/AppIcon.icon/Assets/tilipaiva.svg`, authored in Inkscape — edit and
+  re-export from there, and keep `icon.json`'s `image-name` in sync with the
+  asset file name. **The SVG must contain no `<text>` elements** (Icon Composer
+  warns about font-dependent text): convert type with `Path → Object to Path`
+  and save as **Inkscape SVG**. Saving as *Plain SVG* silently drops the layer
+  and the icon renders as an empty background square.
 
 ## Pending / manual
 
 - **App Group must be registered on both App IDs in the developer portal**, and
   the app signed with the real team, before the widget reads shared data on a
   device. Simulator builds don't validate this.
-- `Tilipaiva.xcodeproj/xcuserdata/...` is still tracked despite `.gitignore`;
-  `git rm --cached -r Tilipaiva.xcodeproj/xcuserdata` would finish the cleanup.
+- `Tilipaiva.xcodeproj/xcuserdata/...` is already ignored and untracked — nothing
+  to clean up (done).
 - App Store Connect submission, screenshots, and final icon art are manual.
-- The app icon artwork is a deliberate placeholder; a designer pass is welcome.
+- The app icon art came from the designer as an Inkscape SVG; further artwork
+  polish should come as a new SVG, not by editing `icon.json` geometry.

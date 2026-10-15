@@ -1,21 +1,18 @@
 {
   "fill" : {
-    "linear-gradient" : [
-      "srgb:0.05882,0.43137,0.29804,1.00000",
-      "srgb:0.19608,0.71765,0.54118,1.00000"
-    ]
+    "solid" : "extended-gray:0.75000,1.00000"
   },
   "groups" : [
     {
       "layers" : [
         {
-          "image-name" : "calendar.svg",
-          "name" : "calendar",
+          "image-name" : "tilipaiva.svg",
+          "name" : "tilipaiva",
           "position" : {
-            "scale" : 0.8,
+            "scale" : 1,
             "translation-in-points" : [
               0,
-              0
+              23.372400287554
             ]
           }
         }
