@@ -20,7 +20,7 @@ xcodebuild test -scheme Tilipaiva \
   CODE_SIGNING_ALLOWED=NO
 ```
 
-- 31 unit tests (Swift Testing) live in `TilipaivaTests/`. Keep them passing.
+- 33 unit tests (Swift Testing) live in `TilipaivaTests/`. Keep them passing.
 - `CODE_SIGNING_ALLOWED=NO` avoids signing for simulator runs. Entitlements are
   not validated on an unsigned simulator build.
 - To eyeball the UI: `xcrun simctl install <device> <app>` then `launch`, and
@@ -109,6 +109,13 @@ Note: `PaymentSource` uses the synthesized Codable, so JSON must include `name`
 - Kela rules: `kuntoutustuki` 7th prev-BD, `elatustuki` 10th prev-BD,
   `lapsilisa` 26th prev-BD + forced shift when the 26th is a Monday,
   `opintotuki` 1st next-BD, `kotihoidontuki` last weekday, `hoitoraha` last BD.
+- **The default salary rule shifts to the previous banking day.** Finnish law
+  requires an agreed payday that falls on a weekend, a public holiday, or any
+  other non-banking day to be paid on the preceding banking day, so a new
+  salary source starts as `fixedDayOfMonth(day: 15, shift: .previousBankingDay)`.
+  `RuleDraft.shift` defaults to `.previousBankingDay` too. `PaymentRule`'s
+  decoder still falls back to `.none` for stored sources that omit `shift`, so
+  existing user data is untouched.
 - App Group id `group.fi.ruupert.Tilipaiva`; both `Tilipaiva.entitlements` and
   `TilipaivaWidget.entitlements` declare it.
 - Widget families: `systemSmall`, `systemMedium`, `accessoryCircular`,

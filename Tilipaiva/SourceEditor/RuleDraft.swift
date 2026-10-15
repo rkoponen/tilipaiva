@@ -28,7 +28,7 @@ struct RuleDraft: Equatable {
 
     var kind: Kind = .dayOfMonth
     var day = 15
-    var shift: BankingDayShift = .none
+    var shift: BankingDayShift = .previousBankingDay
     var nth = 1
     var weekday: Weekday = .friday
 

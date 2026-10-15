@@ -16,7 +16,7 @@ enum SourceEditorItem: Identifiable {
     var source: PaymentSource {
         switch self {
         case .create:
-            PaymentSource(kind: .salary, rule: .fixedDayOfMonth(day: 15, shift: .none, alsoShiftOnWeekdays: []))
+            PaymentSource(kind: .salary, rule: .fixedDayOfMonth(day: 15, shift: .previousBankingDay, alsoShiftOnWeekdays: []))
         case let .edit(source):
             source
         }
