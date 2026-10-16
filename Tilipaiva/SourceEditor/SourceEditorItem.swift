@@ -13,10 +13,14 @@ enum SourceEditorItem: Identifiable {
     }
 
     /// The source the editor starts from.
+    ///
+    /// A new salary pays on the last banking day of the month, the most common
+    /// Finnish payday. That is also what "the last day of the month" becomes
+    /// once Finnish law moves a weekend or holiday payday to the day before.
     var source: PaymentSource {
         switch self {
         case .create:
-            PaymentSource(kind: .salary, rule: .fixedDayOfMonth(day: 15, shift: .previousBankingDay, alsoShiftOnWeekdays: []))
+            PaymentSource(kind: .salary, rule: .lastBankingDayOfMonth)
         case let .edit(source):
             source
         }

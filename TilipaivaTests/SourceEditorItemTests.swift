@@ -3,11 +3,10 @@ import Testing
 
 @MainActor
 struct SourceEditorItemTests {
-    /// A new salary shifts to the previous banking day, as Finnish law requires
-    /// for an agreed payday that falls on a non-banking day.
-    @Test func aNewSalaryShiftsToThePreviousBankingDay() {
-        #expect(SourceEditorItem.create.source.rule
-            == .fixedDayOfMonth(day: 15, shift: .previousBankingDay, alsoShiftOnWeekdays: []))
+    /// A new salary pays on the last banking day of the month, the most common
+    /// Finnish payday.
+    @Test func aNewSalaryDefaultsToTheLastBankingDay() {
+        #expect(SourceEditorItem.create.source.rule == .lastBankingDayOfMonth)
     }
 
     /// Editing keeps the source's existing rule untouched.

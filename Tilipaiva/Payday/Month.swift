@@ -25,6 +25,11 @@ nonisolated struct Month: Hashable, Comparable, Sendable {
         month == 12 ? Month(year: year + 1, month: 1) : Month(year: year, month: month + 1)
     }
 
+    /// The preceding month, rolling back to December of the previous year.
+    var previous: Month {
+        month == 1 ? Month(year: year - 1, month: 12) : Month(year: year, month: month - 1)
+    }
+
     /// The first moment of the month in the given calendar.
     func start(in calendar: Calendar) -> Date {
         calendar.date(from: DateComponents(year: year, month: month, day: 1))!

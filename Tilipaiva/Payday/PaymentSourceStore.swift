@@ -14,7 +14,7 @@ nonisolated struct PaymentSourceStore: Sendable {
     }
 
     private var defaults: UserDefaults {
-        suiteName.flatMap { UserDefaults(suiteName: $0) } ?? .standard
+        SharedDefaults.defaults(suiteName: suiteName)
     }
 
     /// The stored sources, or an empty list when nothing has been saved.

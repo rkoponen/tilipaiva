@@ -56,9 +56,19 @@ nonisolated struct BankingCalendar: Sendable {
 
     // MARK: - Month-relative days
 
+    /// The first day of the month.
+    func start(of month: Month) -> Date {
+        month.start(in: calendar)
+    }
+
+    /// The last day of the month.
+    func lastDay(of month: Month) -> Date {
+        date(year: month.year, month: month.month, day: month.dayCount(in: calendar))
+    }
+
     /// The first banking day of the month.
     func firstBankingDay(of month: Month) -> Date {
-        bankingDay(onOrAfter: month.start(in: calendar))
+        bankingDay(onOrAfter: start(of: month))
     }
 
     /// The last banking day of the month.
@@ -96,6 +106,11 @@ nonisolated struct BankingCalendar: Sendable {
     /// The month that contains the date.
     func month(containing date: Date) -> Month {
         Month(containing: date, in: calendar)
+    }
+
+    /// The date a number of days after the given date.
+    func adding(days: Int, to date: Date) -> Date {
+        calendar.date(byAdding: .day, value: days, to: date)!
     }
 
     /// The start of the day that contains the date.
@@ -143,14 +158,6 @@ nonisolated struct BankingCalendar: Sendable {
 
     private func date(year: Int, month: Int, day: Int) -> Date {
         calendar.date(from: DateComponents(year: year, month: month, day: day))!
-    }
-
-    private func lastDay(of month: Month) -> Date {
-        date(year: month.year, month: month.month, day: month.dayCount(in: calendar))
-    }
-
-    private func adding(days: Int, to date: Date) -> Date {
-        calendar.date(byAdding: .day, value: days, to: date)!
     }
 
     /// The Friday within the given July-week style window, e.g. Midsummer Eve.

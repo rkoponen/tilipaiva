@@ -10,8 +10,23 @@ struct RuleDraft: Equatable {
         case lastWeekday
         case nthBankingDay
         case nthWeekday
+        case everyNthWeek
 
         var id: Self { self }
+
+        /// The kinds the picker offers, most common first.
+        ///
+        /// `lastWeekday` is missing on purpose: the Kela benefit that needs it
+        /// takes its rule from the catalog, so nothing new should be able to
+        /// pick it, but rules saved earlier still have to resolve and round-trip.
+        static let selectable: [Kind] = [
+            .lastBankingDay,
+            .dayOfMonth,
+            .firstBankingDay,
+            .nthBankingDay,
+            .nthWeekday,
+            .everyNthWeek,
+        ]
 
         /// The localized picker label.
         var title: LocalizedStringKey {
@@ -22,15 +37,18 @@ struct RuleDraft: Equatable {
             case .lastWeekday: "Last weekday"
             case .nthBankingDay: "Nth banking day"
             case .nthWeekday: "Nth weekday"
+            case .everyNthWeek: "Every Nth week"
             }
         }
     }
 
-    var kind: Kind = .dayOfMonth
+    var kind: Kind = .lastBankingDay
     var day = 15
     var shift: BankingDayShift = .previousBankingDay
     var nth = 1
     var weekday: Weekday = .friday
+    var weeks = 2
+    var startingOn = Date()
 
     init(_ rule: PaymentRule) {
         switch rule {
@@ -51,6 +69,11 @@ struct RuleDraft: Equatable {
             kind = .nthWeekday
             nth = n
             self.weekday = weekday
+        case let .everyNthWeek(n, startingOn, shift):
+            kind = .everyNthWeek
+            weeks = n
+            self.startingOn = startingOn
+            self.shift = shift
         }
     }
 
@@ -69,6 +92,8 @@ struct RuleDraft: Equatable {
             .nthBankingDayOfMonth(n: nth)
         case .nthWeekday:
             .nthWeekdayOfMonth(n: nth, weekday: weekday)
+        case .everyNthWeek:
+            .everyNthWeek(n: weeks, startingOn: startingOn, shift: shift)
         }
     }
 }

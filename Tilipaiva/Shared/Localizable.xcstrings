@@ -43,7 +43,7 @@
       }
     },
     "About" : {
-      "comment" : "Accessibility label of the button that opens the app information sheet.",
+      "comment" : "Section header for the app information in the settings sheet.",
       "localizations" : {
         "fi" : {
           "stringUnit" : {
@@ -86,6 +86,17 @@
         }
       }
     },
+    "Appearance" : {
+      "comment" : "Section header for the home screen's appearance settings.",
+      "localizations" : {
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ulkoasu"
+          }
+        }
+      }
+    },
     "Benefit" : {
       "comment" : "Payment source kind for a Kela benefit.",
       "localizations" : {
@@ -108,6 +119,17 @@
         }
       }
     },
+    "day" : {
+      "comment" : "Unit under a day count of one, where English needs the singular.",
+      "localizations" : {
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "päivä"
+          }
+        }
+      }
+    },
     "Day" : {
       "comment" : "Label for the day-of-month picker in a payday rule.",
       "localizations" : {
@@ -115,17 +137,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Päivä"
-          }
-        }
-      }
-    },
-    "days" : {
-      "comment" : "Abbreviated unit label beneath the day count in the Lock Screen circular widget.",
-      "localizations" : {
-        "fi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "pv"
           }
         }
       }
@@ -141,8 +152,20 @@
         }
       }
     },
+    "days" : {
+      "comment" : "Unit under a day count, in the hero countdown and the Lock Screen circular widget.",
+      "localizations" : {
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "päivää"
+          }
+        }
+      }
+    },
     "Done" : {
       "comment" : "Button that dismisses the app information sheet.",
+      "extractionState" : "stale",
       "localizations" : {
         "fi" : {
           "stringUnit" : {
@@ -174,6 +197,17 @@
         }
       }
     },
+    "Every Nth week" : {
+      "comment" : "Payday rule: a payment every N weeks, counted from a known payment date.",
+      "localizations" : {
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Joka n:s viikko"
+          }
+        }
+      }
+    },
     "First banking day" : {
       "comment" : "Payday rule: the first banking day of the month.",
       "localizations" : {
@@ -181,6 +215,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ensimmäinen pankkipäivä"
+          }
+        }
+      }
+    },
+    "Home" : {
+      "comment" : "Tab label for the main screen, which the settings tab sits beside.",
+      "localizations" : {
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Koti"
           }
         }
       }
@@ -251,6 +296,17 @@
         }
       }
     },
+    "Next payment" : {
+      "comment" : "Label for the date picker that anchors a week-interval payday rule.",
+      "localizations" : {
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seuraava maksupäivä"
+          }
+        }
+      }
+    },
     "Next payments" : {
       "comment" : "Section header previewing the next payment dates in the source editor.",
       "localizations" : {
@@ -285,7 +341,7 @@
       }
     },
     "None" : {
-      "comment" : "No adjustment is applied to a fixed payment day.",
+      "comment" : "No adjustment on a fixed payment day, or no progress drawn for the next payday.",
       "localizations" : {
         "fi" : {
           "stringUnit" : {
@@ -372,6 +428,17 @@
         }
       }
     },
+    "Progress ring" : {
+      "comment" : "Switch that turns the ring around the hero countdown on and off.",
+      "localizations" : {
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edistymiskehä"
+          }
+        }
+      }
+    },
     "Remove Source" : {
       "comment" : "Destructive button that deletes the payment source being edited.",
       "localizations" : {
@@ -412,6 +479,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tallenna"
+          }
+        }
+      }
+    },
+    "Settings" : {
+      "comment" : "Title of the settings sheet, and of the footer link that opens it.",
+      "localizations" : {
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Asetukset"
           }
         }
       }
@@ -464,7 +542,7 @@
       }
     },
     "Version" : {
-      "comment" : "Row label showing the app's version number in the app information sheet.",
+      "comment" : "Row label showing the app's version number in the settings sheet.",
       "localizations" : {
         "fi" : {
           "stringUnit" : {
@@ -481,6 +559,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Viikonpäivä"
+          }
+        }
+      }
+    },
+    "Weeks between payments" : {
+      "comment" : "Label for the week-count picker in a week-interval payday rule.",
+      "localizations" : {
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Viikkoja maksujen välissä"
           }
         }
       }

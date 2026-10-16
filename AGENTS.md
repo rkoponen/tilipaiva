@@ -20,7 +20,8 @@ xcodebuild test -scheme Tilipaiva \
   CODE_SIGNING_ALLOWED=NO
 ```
 
-- 33 unit tests (Swift Testing) live in `TilipaivaTests/`. Keep them passing.
+- Unit tests (Swift Testing) live in `TilipaivaTests/`. Keep them passing; don't
+  track how many there are here.
 - `CODE_SIGNING_ALLOWED=NO` avoids signing for simulator runs. Entitlements are
   not validated on an unsigned simulator build.
 - To eyeball the UI: `xcrun simctl install <device> <app>` then `launch`, and
@@ -68,13 +69,23 @@ Folders:
 - `PaymentRule` — Codable enum with a `type` discriminator; supports
   `fixedDayOfMonth` (with `shift` and `alsoShiftOnWeekdays`),
   `firstBankingDayOfMonth`, `lastBankingDayOfMonth`, `lastWeekdayOfMonth`,
-  `nthBankingDayOfMonth`, `nthWeekdayOfMonth`.
-- `PaymentResolver` — resolves dates/occurrences; `upcoming(for:onOrAfter:limit:)`
-  returns `[UpcomingPayment]` and `next(for:onOrAfter:)` returns one.
+  `nthBankingDayOfMonth`, `nthWeekdayOfMonth`, and `everyNthWeek` (an anchored
+  series: `startingOn` plus whole multiples of `n` weeks, for pay every two,
+  three or four weeks).
+- `PaymentResolver` — resolves dates/occurrences; `dates(for:in:)` returns every
+  date a rule has in a month (a monthly rule has at most one, a week-interval
+  rule up to three), `date(for:in:)` the first of them,
+  `upcoming(for:onOrAfter:limit:)` returns `[UpcomingPayment]` and
+  `next(for:onOrAfter:)` returns one. It also looks backwards:
+  `previousOccurrence(for:onOrBefore:)` and `cycle(endingAt:)`.
+- `PaymentCycle` — one wait between two payments of a source (`previous` →
+  `next`) and `fraction(on:)`, how much of it has passed in whole days.
 - `Benefits.json` + `BenefitCatalog` — the 7 Tier-1 Kela benefits as data.
-- `PaymentSource`, `PaymentOccurrence`, `UpcomingPayment`, `Month`, `Weekday`.
+- `PaymentSource`, `PaymentOccurrence`, `UpcomingPayment`, `Month` (with `next`
+  and `previous`), `Weekday`.
 - `SharedDefaults` + `PaymentSourceStore` — sources persisted as JSON in the
-  App Group `group.fi.ruupert.Tilipaiva` (suite fallback to `.standard`).
+  App Group `group.fi.ruupert.Tilipaiva`, and the hero's `progressStyle` beside
+  them (`SharedDefaults.shared`, suite fallback to `.standard`).
 - App side: `PaymentSourcesModel` (`@Observable`, MainActor) owns sources and
   calls `WidgetCenter.shared.reloadAllTimelines()` on change.
 
@@ -109,13 +120,19 @@ Note: `PaymentSource` uses the synthesized Codable, so JSON must include `name`
 - Kela rules: `kuntoutustuki` 7th prev-BD, `elatustuki` 10th prev-BD,
   `lapsilisa` 26th prev-BD + forced shift when the 26th is a Monday,
   `opintotuki` 1st next-BD, `kotihoidontuki` last weekday, `hoitoraha` last BD.
-- **The default salary rule shifts to the previous banking day.** Finnish law
-  requires an agreed payday that falls on a weekend, a public holiday, or any
-  other non-banking day to be paid on the preceding banking day, so a new
-  salary source starts as `fixedDayOfMonth(day: 15, shift: .previousBankingDay)`.
-  `RuleDraft.shift` defaults to `.previousBankingDay` too. `PaymentRule`'s
-  decoder still falls back to `.none` for stored sources that omit `shift`, so
-  existing user data is untouched.
+- **A new salary pays on the last banking day of the month**, the most common
+  Finnish payday: `SourceEditorItem.create` starts as `lastBankingDayOfMonth`.
+  That is also what "the last day of the month" resolves to in practice, because
+  Finnish law requires an agreed payday that falls on a weekend, a public
+  holiday, or any other non-banking day to be paid on the preceding banking day
+  — which is why `RuleDraft.shift` defaults to `.previousBankingDay`.
+  `PaymentRule`'s decoder still falls back to `.none` for stored sources that
+  omit `shift`, so existing user data is untouched.
+- **The picker no longer offers "Last weekday"** (`RuleDraft.Kind.selectable`
+  leaves out `.lastWeekday`). The rule itself stays: `kotihoidontuki` takes it
+  from `Benefits.json`, and a source saved earlier must still resolve and
+  round-trip. `RuleEditorView` shows the current kind even when it is no longer
+  on offer, so such a source still displays what it is.
 - App Group id `group.fi.ruupert.Tilipaiva`; both `Tilipaiva.entitlements` and
   `TilipaivaWidget.entitlements` declare it.
 - Widget families: `systemSmall`, `systemMedium`, `accessoryCircular`,

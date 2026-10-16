@@ -8,7 +8,7 @@ struct RuleEditorView: View {
 
     var body: some View {
         Picker("Payday rule", selection: $draft.kind) {
-            ForEach(RuleDraft.Kind.allCases) { kind in
+            ForEach(kinds) { kind in
                 Text(kind.title).tag(kind)
             }
         }
@@ -21,11 +21,18 @@ struct RuleEditorView: View {
                 }
             }
 
-            Picker("Adjustment", selection: $draft.shift) {
-                Text("None").tag(BankingDayShift.none)
-                Text("Previous banking day").tag(BankingDayShift.previousBankingDay)
-                Text("Next banking day").tag(BankingDayShift.nextBankingDay)
+            BankingDayShiftPicker(shift: $draft.shift)
+
+        case .everyNthWeek:
+            DatePicker("Next payment", selection: $draft.startingOn, displayedComponents: .date)
+
+            Picker("Weeks between payments", selection: $draft.weeks) {
+                ForEach(1...4, id: \.self) { weeks in
+                    Text(weeks, format: .number).tag(weeks)
+                }
             }
+
+            BankingDayShiftPicker(shift: $draft.shift)
 
         case .nthBankingDay:
             Picker("Nth", selection: $draft.nth) {
@@ -50,5 +57,13 @@ struct RuleEditorView: View {
         case .firstBankingDay, .lastBankingDay, .lastWeekday:
             EmptyView()
         }
+    }
+
+    /// The picker options, plus the current rule's kind when the picker no longer
+    /// offers it, so a rule saved earlier still shows what it is.
+    private var kinds: [RuleDraft.Kind] {
+        RuleDraft.Kind.selectable.contains(draft.kind)
+            ? RuleDraft.Kind.selectable
+            : RuleDraft.Kind.selectable + [draft.kind]
     }
 }

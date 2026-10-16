@@ -25,6 +25,13 @@ nonisolated enum PaymentRule: Hashable, Sendable {
 
     /// The nth given weekday of the month, e.g. the second Friday.
     case nthWeekdayOfMonth(n: Int, weekday: Weekday)
+
+    /// A payment that recurs every `n` weeks from a known payment date.
+    ///
+    /// The anchor keeps the series aligned across months, which a monthly rule
+    /// cannot express: occurrences are `startingOn` plus whole multiples of `n`
+    /// weeks, each adjusted to a banking day.
+    case everyNthWeek(n: Int, startingOn: Date, shift: BankingDayShift)
 }
 
 extension PaymentRule: Codable {
@@ -35,6 +42,7 @@ extension PaymentRule: Codable {
         case lastWeekdayOfMonth
         case nthBankingDayOfMonth
         case nthWeekdayOfMonth
+        case everyNthWeek
     }
 
     private enum CodingKeys: String, CodingKey {
@@ -44,6 +52,7 @@ extension PaymentRule: Codable {
         case alsoShiftOnWeekdays
         case n
         case weekday
+        case startingOn
     }
 
     init(from decoder: Decoder) throws {
@@ -67,6 +76,12 @@ extension PaymentRule: Codable {
             self = .nthWeekdayOfMonth(
                 n: try container.decode(Int.self, forKey: .n),
                 weekday: try container.decode(Weekday.self, forKey: .weekday)
+            )
+        case .everyNthWeek:
+            self = .everyNthWeek(
+                n: try container.decode(Int.self, forKey: .n),
+                startingOn: try container.decode(Date.self, forKey: .startingOn),
+                shift: try container.decodeIfPresent(BankingDayShift.self, forKey: .shift) ?? .none
             )
         }
     }
@@ -94,6 +109,11 @@ extension PaymentRule: Codable {
             try container.encode(Kind.nthWeekdayOfMonth, forKey: .type)
             try container.encode(n, forKey: .n)
             try container.encode(weekday, forKey: .weekday)
+        case let .everyNthWeek(n, startingOn, shift):
+            try container.encode(Kind.everyNthWeek, forKey: .type)
+            try container.encode(n, forKey: .n)
+            try container.encode(startingOn, forKey: .startingOn)
+            try container.encode(shift, forKey: .shift)
         }
     }
 }
