@@ -4,36 +4,39 @@ import SwiftUI
 struct HomeView: View {
     let model: PaymentSourcesModel
     var onSelect: (PaymentSource) -> Void
-    var onAbout: () -> Void
+
+    @AppStorage(SharedDefaults.progressStyleKey, store: SharedDefaults.shared)
+    private var progressStyle: ProgressStyle = .ring
 
     var body: some View {
-        ScrollView {
-            VStack(spacing: Design.sectionSpacing) {
-                if model.next != nil {
+        if let next = model.next {
+            ScrollView {
+                VStack(spacing: Design.sectionSpacing) {
                     // Give the countdown most of the first screen so the list
                     // sits below it rather than competing with it.
-                    PaydayCountdownView(payment: model.next)
+                    PaydayCountdownView(payment: next, cycle: model.nextCycle, progressStyle: progressStyle)
                         .containerRelativeFrame(.vertical, alignment: .center) { length, _ in length * 0.55 }
-                } else {
-                    PaydayCountdownView(payment: nil)
-                }
 
-                if !model.upcoming.isEmpty {
-                    UpcomingPaymentsSection(payments: model.upcoming, onSelect: onSelect)
-                }
+                    if !model.upcoming.isEmpty {
+                        UpcomingPaymentsSection(payments: model.upcoming, onSelect: onSelect)
+                    }
 
-                if model.hasBenefitSources {
-                    PaymentDisclaimer()
+                    if model.hasBenefitSources {
+                        PaymentDisclaimer()
+                    }
                 }
-
-                Button("About", action: onAbout)
-                    .font(.footnote)
-                    .buttonStyle(.plain)
-                    .foregroundStyle(.secondary)
-                    .padding(.top)
+                .padding()
+                .frame(maxWidth: .infinity)
             }
-            .padding()
-            .frame(maxWidth: .infinity)
+        } else {
+            // An empty screen has nothing to scroll, so the empty state takes the
+            // whole area and centres itself in it instead of hanging off the top.
+            ScrollView {
+                HomeEmptyStateView()
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .containerRelativeFrame(.vertical, alignment: .center)
+            }
         }
     }
 }

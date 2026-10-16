@@ -45,8 +45,10 @@ display name "Tilipäivä".
 
 The widget target compiles the app's folder **minus an exception list** in
 `project.pbxproj` (`PBXFileSystemSynchronizedBuildFileExceptionSet`, id `...045`).
-It currently excludes: `About`, `AppIcon.icon`, `Assets.xcassets`,
-`ContentView.swift`, `Home`, `SourceEditor`, `TilipaivaApp.swift`.
+That list holds only `AppIcon.icon`, `Assets.xcassets`, `ContentView.swift` and
+`TilipaivaApp.swift`, so the app-only folders below are currently compiled into
+the widget as well (it builds, but that is not the intent; the widget's object
+files show it).
 
 > **When you add an app-only file or folder under `Tilipaiva/`, add it to that
 > exception list**, or the widget will try to compile it.
@@ -55,9 +57,11 @@ Folders:
 
 - `Tilipaiva/Payday/` — the domain engine (shared with the widget).
 - `Tilipaiva/Shared/` — shared views, `Design` constants, `Localizable.xcstrings`.
-- `Tilipaiva/Home/`, `SourceEditor/`, `About/` — app-only UI.
+  `CountdownDayView` lives here because both the app's hero and the Lock Screen
+  circular widget draw the same number-over-unit label.
+- `Tilipaiva/Home/`, `SourceEditor/`, `Settings/` — app-only UI.
 - `TilipaivaWidget/` — widget target.
-- `TilipaivaTests/` — tests. `docs/` — GitHub Pages site (`tilipaiva.ruupert.fi`).
+- `TilipaivaTests/` — tests. `docs/` — GitHub Pages site (`tilipäivä.ruupert.fi`).
 - `AppStore.md` — App Store metadata draft.
 
 ## Domain engine (`Tilipaiva/Payday/`)
@@ -139,8 +143,33 @@ Note: `PaymentSource` uses the synthesized Codable, so JSON must include `name`
   `accessoryInline`. An `accessoryRectangular` (+`RectangularCountdownView`) was
   added then removed — no Lock Screen widget occupies "two circular slots".
 - Home layout: hero countdown owns ~55% of the screen; the upcoming list is a
-  light, secondary, dividered list below it. About is a quiet footer link, not a
-  top button (only `+` floats top-right).
+  light, secondary, dividered list below it. With no sources the empty state
+  takes the whole area and centres itself in it instead of hanging off the top.
+  The app is a two-tab `TabView` — **Home** (`house`) and **Settings**
+  (`gearshape`). Tabs rather than a sheet because a bar pinned with
+  `safeAreaInset` had no background and let the list scroll through it. The
+  floating `+` belongs to the Home tab and stays top-right; it is the only
+  chrome outside the tab bar.
+  `PaymentBackground()` has to be applied **inside** the Home tab: a `TabView`
+  draws over a background set on the `TabView` itself, and the screen goes flat
+  black without it.
+- **The hero's ring holds only the day count; the payment's name and date sit
+  below it.** Stacking all four inside the ring read as a crammed list, so the
+  ring answers "how long" and the two lines under it answer "what and when".
+  `CountdownDayView` (shared with the Lock Screen circular widget) draws the
+  number with its unit; the phrase "6 days" at hero size is wider than the ring,
+  so inside a ring the unit drops to its own line, and without a ring — the
+  switch is off, or the wait is not known — the two share a line and read as one.
+  The unit is the full word (`day`/`days` → "päivä"/"päivää"), not an
+  abbreviation, and it is set in the rounded design to match the number.
+- **The hero's progress shows the wait between two payments**, not the calendar
+  month: `PaymentCycle.previous` → `next`. Settings has a switch, "Progress ring"
+  (fi "Edistymiskehä"), and it drives `ProgressStyle` — `ring` or `none` — stored
+  in the shared defaults under `progressStyle`, with the ring on by default. A
+  `bar` style and a picker both came and went: with two states a switch says it
+  best. The day count always stays; the ring is decoration and is hidden from
+  assistive technologies. The widget does not draw it yet, though the preference
+  is already shared.
 - Brand accent is a "payday green" (light `#1F8A5A`, dark `#4FD1A0`); the App
   Icon is a sage-green calendar tile with a € disc, made with Icon Composer
   (`Tilipaiva/AppIcon.icon`). The source artwork is

@@ -22,6 +22,12 @@ final class PaymentSourcesModel {
     /// The next payment across every source, if there is one.
     var next: UpcomingPayment? { upcoming.first }
 
+    /// The wait the next payment ends, used for the hero's progress.
+    var nextCycle: PaymentCycle? {
+        guard let next else { return nil }
+        return resolver.cycle(endingAt: next)
+    }
+
     /// Whether any tracked source is a Kela benefit, so the disclaimer is shown.
     var hasBenefitSources: Bool { sources.contains { $0.kind == .benefit } }
 
