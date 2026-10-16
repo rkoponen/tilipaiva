@@ -1,6 +1,6 @@
 {
   "fill" : {
-    "solid" : "extended-gray:0.75000,1.00000"
+    "solid" : "srgb:0.00000,0.56284,0.31882,1.00000"
   },
   "groups" : [
     {
@@ -9,7 +9,7 @@
           "image-name" : "tilipaiva.svg",
           "name" : "tilipaiva",
           "position" : {
-            "scale" : 1,
+            "scale" : 0.9,
             "translation-in-points" : [
               0,
               23.372400287554
