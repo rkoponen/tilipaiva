@@ -109,12 +109,29 @@
       }
     },
     "day" : {
-      "comment" : "Unit under a day count of one, where English needs the singular.",
+      "comment" : "Unit under a day count of one in the hero countdown, where English needs the singular.",
       "localizations" : {
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "päivä"
+          }
+        }
+      }
+    },
+    "day (short)" : {
+      "comment" : "Short unit under a day count of one in the Lock Screen circular widget, where the full word is wider than the circle.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "day"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "pv"
           }
         }
       }
@@ -142,12 +159,29 @@
       }
     },
     "days" : {
-      "comment" : "Unit under a day count, in the hero countdown and the Lock Screen circular widget.",
+      "comment" : "Unit under a day count in the hero countdown.",
       "localizations" : {
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "päivää"
+          }
+        }
+      }
+    },
+    "days (short)" : {
+      "comment" : "Short unit under a day count in the Lock Screen circular widget, where the full word is wider than the circle.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "days"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "pv"
           }
         }
       }

@@ -156,8 +156,15 @@ Note: `PaymentSource` uses the synthesized Codable, so JSON must include `name`
 - App Group id `group.fi.ruupert.Tilipaiva`; both `Tilipaiva.entitlements` and
   `TilipaivaWidget.entitlements` declare it.
 - Widget families: `systemSmall`, `systemMedium`, `accessoryCircular`,
-  `accessoryInline`. An `accessoryRectangular` (+`RectangularCountdownView`) was
-  added then removed — no Lock Screen widget occupies "two circular slots".
+  `accessoryInline`, `accessoryRectangular`. The rectangular one
+  (`RectangularCountdownView`: the payment's name over its countdown and date)
+  was added early, removed, and brought back when the Lock Screen text widget was
+  wanted — the note that removed it ("no Lock Screen widget occupies two circular
+  slots") was about the layout being unfamiliar, not about it not existing.
+- **Only the home screen widgets carry a background.** `WidgetBackground`, which
+  `PaymentWidgetView` puts in `containerBackground`, draws `PaymentBackground()`
+  for `systemSmall`/`systemMedium` and `Color.clear` for the three Lock Screen
+  accessories, which sit on the wallpaper the way the system's own do.
 - Home layout: hero countdown owns ~55% of the screen; the upcoming list is a
   light, secondary, dividered list below it. With no sources the empty state
   takes the whole area and centres itself in it instead of hanging off the top.
@@ -177,7 +184,8 @@ Note: `PaymentSource` uses the synthesized Codable, so JSON must include `name`
   size is wider than the ring, and putting the unit beside the number pushed the
   number off-centre — a trial of both is why the unit sits where it does now.
   The unit is the full word (`day`/`days` → "päivä"/"päivää"), not an
-  abbreviation, and it is set in the rounded design to match the number.
+  abbreviation, and it is set in the rounded design to match the number. Only the
+  circular widget shortens it — see below.
 - **The hero's progress shows the wait between two payments**, not the calendar
   month: `PaymentCycle.previous` → `next`, always drawn as a ring. There was a
   style preference (a `bar` option first, then a switch between `ring` and
@@ -185,7 +193,42 @@ Note: `PaymentSource` uses the synthesized Codable, so JSON must include `name`
   `ProgressStyle` and nothing to store. A ring needs a wait to measure: when the
   source has no earlier payment to count from, the ring is left out and the
   countdown stands on its own. The ring is decoration and is hidden from
-  assistive technologies, and the widget does not draw it yet.
+  assistive technologies, and it belongs to the hero: the Lock Screen widgets
+  show the day count without it.
+- **The Lock Screen accessories are the same content in three shapes.**
+  `CountdownDayView.UnitStyle.short` is used in the circular one, because the
+  Finnish "päivää" is wider than the circle it would sit in: the `day (short)` and
+  `days (short)` keys are "pv" in Finnish and stay "day"/"days" in English. The
+  full word overflows, and it has no `minimumScaleFactor` to shrink it; the hero
+  keeps the full word, since its ring has the room.
+  - The circular one (`accessoryCircular`) stacks three rows the way the system's
+    own small widgets do — a number, its label, and the app's mark.
+    `CircularCountdownView` is the day count, the short unit, and
+    `eurosign.circle.fill`, the euro disc the App Icon wears: a system symbol
+    rather than an emoji, so it takes the Lock Screen's rendering instead of
+    sitting on top of it in colour (the 💰 emoji also carries a dollar sign, which
+    is the wrong currency here). The rows are sized to fit the circle down to
+    50 pt, and the 6 pt inset lets "Tänään!" scale down instead of running over
+    the edge.
+    - The hero's ring was tried in the circle too, and dropped: at that size it
+      read as clutter around the count rather than as progress, so `PaymentRing`,
+      the `AccessoryWidgetBackground()` and the `PaymentCycle` that `PaymentEntry`
+      carried for it all came back out. For the record, if a ring is ever wanted
+      there: the system's own accessory circular ring (the Weather widget's)
+      measures 5.6 pt across a 58 pt circle — measured by rendering
+      `Gauge(value:).gaugeStyle(.accessoryCircularCapacity)` in the simulator and
+      scanning the pixels.
+  - The inline one (`accessoryInline`) is one line, "Palkka · 6 päivää", with the
+    countdown last so that a long name gives way to it when the line truncates.
+  - The rectangular one (`accessoryRectangular`) is two lines: the payment's name,
+    and the countdown below it in the rounded design the hero's count uses. Both
+    are a step below the sizes they wear elsewhere — `subheadline` for the name,
+    `title2` for the count, rather than the hero's `headline` and 88 pt — because
+    the card is meant to sit quietly on the Lock Screen. The date used to be there
+    too, first beside the count — where the two of them competed for the line
+    until the count, the one thing the card is for, was the part that gave way
+    ("3 p… ti 20.10.") — and then on a line with the name, before being dropped as
+    unnecessary. A `minimumScaleFactor(0.6)` stays behind the count.
 - Brand accent is a "payday green" (light `#1F8A5A`, dark `#4FD1A0`); the App
   Icon is a sage-grey and cream calendar tile with a € disc on that green (the
   `fill` in `icon.json`, with the artwork at a 90 % scale), made with Icon
@@ -242,5 +285,10 @@ it.
 - `Tilipaiva.xcodeproj/xcuserdata/...` is already ignored and untracked — nothing
   to clean up (done).
 - App Store Connect submission, screenshots, and final icon art are manual.
+- **The Lock Screen widgets have only been seen as rendered images.** A widget
+  cannot be added to the Lock Screen without tapping it in the Simulator, and
+  Xcode 27 ships no Simulator.app, so the circular, inline and rectangular
+  accessories all want a hand check on a device: what they *look* like there
+  (vibrancy, the wallpaper, the user's tint) is not what a rendered PNG shows.
 - The app icon art came from the designer as an Inkscape SVG; further artwork
   polish should come as a new SVG, not by editing `icon.json` geometry.

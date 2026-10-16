@@ -16,10 +16,23 @@ struct CountdownDayView: View {
     /// The font of the unit label under the number.
     var unitFont: Font = .caption2
 
+    /// Which wording the unit label uses.
+    var unitStyle: UnitStyle = .full
+
     /// The font of the word shown when the payment is today. It is set apart from
     /// `numberFont` because a word is wider than a number and has to stay inside
     /// the same circle.
     var todayFont: Font = .headline
+
+    /// How much room the unit word has to fit in.
+    enum UnitStyle {
+        /// The whole word, which the hero's ring has room for.
+        case full
+
+        /// A short form for the Lock Screen circular widget, where the Finnish
+        /// "päivää" is wider than the circle it would sit in.
+        case short
+    }
 
     var body: some View {
         if days == 0 {
@@ -34,11 +47,20 @@ struct CountdownDayView: View {
                     .lineLimit(1)
                     .minimumScaleFactor(0.5)
 
-                // A unit label carries no number, so the plural has to be chosen
-                // by hand; "1 days" would be wrong in English.
-                Text(days == 1 ? "day" : "days")
+                Text(unitKey)
                     .font(unitFont)
             }
+        }
+    }
+
+    /// The unit label to show under the number.
+    ///
+    /// A unit label carries no number, so the plural has to be chosen by hand;
+    /// "1 days" would be wrong in English.
+    private var unitKey: LocalizedStringKey {
+        switch unitStyle {
+        case .full: days == 1 ? "day" : "days"
+        case .short: days == 1 ? "day (short)" : "days (short)"
         }
     }
 }
