@@ -10,11 +10,15 @@ Draft copy for App Store Connect. Verify against the current App Store Connect f
 | Subtitle | Päivät tilipäivään |
 | Primary category | Finance |
 | Secondary category | Utilities (optional) |
-| Support URL | https://tilipaiva.ruupert.fi/ |
-| Marketing URL | https://tilipaiva.ruupert.fi/ |
-| Privacy policy URL | https://tilipaiva.ruupert.fi/privacy.html |
+| Support URL | https://tilipäivä.ruupert.fi/ |
+| Marketing URL | https://tilipäivä.ruupert.fi/ |
+| Privacy policy URL | https://tilipäivä.ruupert.fi/privacy.html |
 | Copyright | © 2026 Ruupert Koponen |
 | Price | Free (see open questions in the build spec) |
+
+The support, marketing, and privacy URLs use the IDN **tilipäivä.ruupert.fi** —
+the same domain in Unicode that the app links to. If a form rejects the non-ASCII
+host, its punycode form is `xn--tilipiv-9wac.ruupert.fi` (same pages).
 
 Keywords (100 characters, comma-separated, no spaces):
 

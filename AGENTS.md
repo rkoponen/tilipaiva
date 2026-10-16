@@ -180,6 +180,40 @@ Note: `PaymentSource` uses the synthesized Codable, so JSON must include `name`
   and save as **Inkscape SVG**. Saving as *Plain SVG* silently drops the layer
   and the icon renders as an empty background square.
 
+## Docs site (GitHub Pages)
+
+`docs/` is published to GitHub Pages at **https://tilipäivä.ruupert.fi** with the
+same setup as Viikkonumero: source `main` / `/docs`, legacy build, the custom
+domain in `docs/CNAME`, HTTPS enforced.
+
+The custom domain is an **IDN**: `tilipäivä.ruupert.fi` = punycode
+`xn--tilipiv-9wac.ruupert.fi`. Both `docs/CNAME` and the Pages setting use the
+punycode, and `AppStore.md` / `AboutView.swift` use the readable Unicode form
+(`URL(string:)` IDNA-encodes a Unicode host). The plain ASCII
+`tilipaiva.ruupert.fi` is a **different name and has no DNS record** — don't use
+it.
+
+- **Publishing is just a push.** Any commit to `main` that touches `docs/`
+  triggers a build; nothing else to run. A first auto-build can occasionally
+  race and fail right after the Pages site is created — re-run it with
+  `gh api -X POST repos/rkoponen/tilipaiva/pages/builds`.
+- Enable/repair the site with the `gh` CLI:
+  ```sh
+  gh api -X POST repos/rkoponen/tilipaiva/pages \
+    -f 'source[branch]=main' -f 'source[path]=/docs'
+  gh api repos/rkoponen/tilipaiva/pages --jq '{status,cname,https_enforced}'
+  ```
+- **DNS lives in Cloudflare (zone `ruupert.fi`), set to DNS-only ("grey cloud"),
+  not proxied** — proxying blocks GitHub's certificate issuance. Record:
+  `CNAME xn--tilipiv-9wac -> rkoponen.github.io`. Viikkonumero uses the identical
+  `CNAME viikkonumero -> rkoponen.github.io` (which resolves to GitHub's
+  `185.199.x` IPs). Cloudflare is manual and needs an API token; there is no
+  token/CLI on this machine.
+- HTTPS is enforced (certificate approved). Re-apply Pages settings with a
+  **typed boolean** — `-f` sends the string `"true"` and 422s:
+  `gh api -X PUT repos/rkoponen/tilipaiva/pages -F https_enforced=true`.
+  Certificate state shows up as `https_certificate` on the Pages API.
+
 ## Pending / manual
 
 - **App Group must be registered on both App IDs in the developer portal**, and
