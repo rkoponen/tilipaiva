@@ -5,16 +5,13 @@ struct HomeView: View {
     let model: PaymentSourcesModel
     var onSelect: (PaymentSource) -> Void
 
-    @AppStorage(SharedDefaults.progressStyleKey, store: SharedDefaults.shared)
-    private var progressStyle: ProgressStyle = .ring
-
     var body: some View {
         if let next = model.next {
             ScrollView {
                 VStack(spacing: Design.sectionSpacing) {
                     // Give the countdown most of the first screen so the list
                     // sits below it rather than competing with it.
-                    PaydayCountdownView(payment: next, cycle: model.nextCycle, progressStyle: progressStyle)
+                    PaydayCountdownView(payment: next, cycle: model.nextCycle)
                         .containerRelativeFrame(.vertical, alignment: .center) { length, _ in length * 0.55 }
 
                     if !model.upcoming.isEmpty {

@@ -1,28 +1,25 @@
 import SwiftUI
 
-/// The day count as a large number with its unit, or a single word when the
+/// The day count as a large number over its unit, or a single word when the
 /// payment is today.
 ///
 /// The hero countdown and the Lock Screen circular widget share this view. The
-/// unit sits under the number when there is a ring around it — a phrase like
-/// "6 days" is wider than the circle — and beside it on a plain line, where the
-/// two read as one.
+/// unit always sits under the number: a phrase like "6 days" at hero size is
+/// wider than the ring it would sit in, and stacking keeps the number centred on
+/// its own axis instead of pushing it off-centre beside the unit.
 struct CountdownDayView: View {
     let days: Int
 
     /// The font of the day number.
     var numberFont: Font = .system(.title, design: .rounded, weight: .semibold)
 
-    /// The font of the unit label.
+    /// The font of the unit label under the number.
     var unitFont: Font = .caption2
 
     /// The font of the word shown when the payment is today. It is set apart from
     /// `numberFont` because a word is wider than a number and has to stay inside
     /// the same circle.
     var todayFont: Font = .headline
-
-    /// Whether the unit sits under the number, which is what fits inside a ring.
-    var stacksUnit = true
 
     var body: some View {
         if days == 0 {
@@ -31,12 +28,7 @@ struct CountdownDayView: View {
                 .lineLimit(1)
                 .minimumScaleFactor(0.5)
         } else {
-            // One pair of labels, two arrangements.
-            let layout = stacksUnit
-                ? AnyLayout(VStackLayout(spacing: 0))
-                : AnyLayout(HStackLayout(alignment: .firstTextBaseline, spacing: 8))
-
-            layout {
+            VStack(spacing: 0) {
                 Text(days, format: .number)
                     .font(numberFont)
                     .lineLimit(1)
@@ -51,19 +43,24 @@ struct CountdownDayView: View {
     }
 }
 
-#Preview {
-    let heroNumber = Font.system(size: 88, weight: .semibold, design: .rounded)
-
-    return VStack(spacing: 32) {
+#Preview("Widget", traits: .sizeThatFitsLayout) {
+    HStack {
         CountdownDayView(days: 6)
-        CountdownDayView(days: 6, numberFont: heroNumber, unitFont: .system(.title3, design: .rounded))
-        CountdownDayView(
-            days: 6,
-            numberFont: heroNumber,
-            unitFont: .system(.title3, design: .rounded),
-            stacksUnit: false
-        )
-        CountdownDayView(days: 1, numberFont: heroNumber, unitFont: .system(.title3, design: .rounded), stacksUnit: false)
+        CountdownDayView(days: 1)
+        CountdownDayView(days: 0)
+    }
+    .frame(width: 64, height: 64)
+    .background(.black, in: .circle)
+    .padding()
+}
+
+#Preview("Hero") {
+    let heroNumber = Font.system(size: 88, weight: .semibold, design: .rounded)
+    let heroUnit = Font.system(.title3, design: .rounded)
+
+    return VStack(spacing: 40) {
+        CountdownDayView(days: 6, numberFont: heroNumber, unitFont: heroUnit)
+        CountdownDayView(days: 1, numberFont: heroNumber, unitFont: heroUnit)
         CountdownDayView(days: 0, numberFont: heroNumber, todayFont: .largeTitle)
     }
     .padding()

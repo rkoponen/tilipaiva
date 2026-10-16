@@ -86,17 +86,6 @@
         }
       }
     },
-    "Appearance" : {
-      "comment" : "Section header for the home screen's appearance settings.",
-      "localizations" : {
-        "fi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ulkoasu"
-          }
-        }
-      }
-    },
     "Benefit" : {
       "comment" : "Payment source kind for a Kela benefit.",
       "localizations" : {
@@ -424,17 +413,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tietosuojakäytäntö"
-          }
-        }
-      }
-    },
-    "Progress ring" : {
-      "comment" : "Switch that turns the ring around the hero countdown on and off.",
-      "localizations" : {
-        "fi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Edistymiskehä"
           }
         }
       }

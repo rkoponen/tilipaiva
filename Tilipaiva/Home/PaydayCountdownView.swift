@@ -1,16 +1,16 @@
 import SwiftUI
 
-/// The hero countdown to the next payment, with the wait shown as a ring, a bar
-/// or nothing at all.
+/// The hero countdown to the next payment, with the wait drawn as a ring.
 ///
 /// The ring holds only how long the wait is; which payment it is and when it
-/// arrives sit underneath, so the ring is not crammed full of text.
+/// arrives sit underneath, so the ring is not crammed full of text. A ring needs
+/// a wait to measure, so when the source has no earlier payment to count from the
+/// countdown stands on its own.
 struct PaydayCountdownView: View {
     let payment: UpcomingPayment
     /// The wait the payment ends, when the source has an earlier payment to
     /// measure it from.
     let cycle: PaymentCycle?
-    let progressStyle: ProgressStyle
 
     @ScaledMetric(relativeTo: .largeTitle) private var numberSize = Design.heroNumberSize
     @ScaledMetric(relativeTo: .largeTitle) private var ringSize = Design.heroRingSize
@@ -18,7 +18,7 @@ struct PaydayCountdownView: View {
     var body: some View {
         VStack(spacing: 16) {
             ZStack {
-                if drawsRing, let fraction {
+                if let fraction {
                     PaymentRing(fraction: fraction)
                         .frame(width: ringSize, height: ringSize)
                 }
@@ -27,8 +27,7 @@ struct PaydayCountdownView: View {
                     days: payment.daysUntil(),
                     numberFont: .system(size: numberSize, weight: .semibold, design: .rounded),
                     unitFont: .system(.title3, design: .rounded),
-                    todayFont: .largeTitle,
-                    stacksUnit: drawsRing
+                    todayFont: .largeTitle
                 )
             }
 
@@ -49,19 +48,12 @@ struct PaydayCountdownView: View {
     private var fraction: Double? {
         cycle?.fraction()
     }
-
-    /// Whether a ring is actually drawn: the style has to ask for one *and* the
-    /// wait has to be known. Without a ring the unit shares the number's line.
-    private var drawsRing: Bool {
-        progressStyle == .ring && fraction != nil
-    }
 }
 
 #Preview("Ring") {
     PaydayCountdownView(
         payment: .preview,
-        cycle: PaymentCycle(previous: .now.addingTimeInterval(-15 * 86_400), next: .now.addingTimeInterval(15 * 86_400)),
-        progressStyle: .ring
+        cycle: PaymentCycle(previous: .now.addingTimeInterval(-15 * 86_400), next: .now.addingTimeInterval(15 * 86_400))
     )
     .padding()
 }
@@ -69,28 +61,18 @@ struct PaydayCountdownView: View {
 #Preview("Ring, a long name") {
     PaydayCountdownView(
         payment: .longName,
-        cycle: PaymentCycle(previous: .now.addingTimeInterval(-15 * 86_400), next: .now.addingTimeInterval(15 * 86_400)),
-        progressStyle: .ring
-    )
-    .padding()
-}
-
-#Preview("None") {
-    PaydayCountdownView(
-        payment: .preview,
-        cycle: PaymentCycle(previous: .now.addingTimeInterval(-15 * 86_400), next: .now.addingTimeInterval(15 * 86_400)),
-        progressStyle: .none
+        cycle: PaymentCycle(previous: .now.addingTimeInterval(-15 * 86_400), next: .now.addingTimeInterval(15 * 86_400))
     )
     .padding()
 }
 
 #Preview("Today") {
-    PaydayCountdownView(payment: .today, cycle: PaymentCycle(previous: .now, next: .now), progressStyle: .ring)
+    PaydayCountdownView(payment: .today, cycle: PaymentCycle(previous: .now, next: .now))
         .padding()
 }
 
-#Preview("No cycle yet") {
-    PaydayCountdownView(payment: .preview, cycle: nil, progressStyle: .ring)
+#Preview("No cycle known") {
+    PaydayCountdownView(payment: .preview, cycle: nil)
         .padding()
 }
 

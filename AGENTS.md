@@ -25,9 +25,24 @@ xcodebuild test -scheme Tilipaiva \
 - `CODE_SIGNING_ALLOWED=NO` avoids signing for simulator runs. Entitlements are
   not validated on an unsigned simulator build.
 - To eyeball the UI: `xcrun simctl install <device> <app>` then `launch`, and
-  screenshot with `xcrun simctl io <device> screenshot out.png`. The simulator's
-  default language here is Finnish; force English with
-  `-AppleLanguages '(en)' -AppleLocale en_US`.
+  screenshot with `xcrun simctl io <device> screenshot out.png`. The language and
+  locale follow the device — the booted iPhone 18 Pro Max renders English, not
+  Finnish — so pass `-AppleLanguages '(fi)' -AppleLocale fi_FI`, or `'(en)'`, when
+  the language matters.
+- Xcode 27 ships **no Simulator.app**, so nothing can be tapped from the command
+  line: a screenshot is the only way to check a screen, and anything reachable
+  only by tapping (Settings) has to be reviewed by hand.
+- To seed payments for a screenshot, write the store the app reads and relaunch.
+  The unsigned simulator build gets the App Group suite, and `defaults` has to
+  run inside the simulator against its view of the path — writing the plist from
+  the host is ignored by `cfprefsd`:
+  ```sh
+  APP=$(xcrun simctl get_app_container booted fi.ruupert.Tilipaiva data)
+  HEX=$(xxd -p sources.json | tr -d '\n')
+  xcrun simctl spawn booted defaults write \
+    "/var/mobile/Containers/Data/Application/$(basename "$APP")/Library/Preferences/group.fi.ruupert.Tilipaiva" \
+    paymentSources -data "$HEX"
+  ```
 - Toolkit: Xcode 27.0, Swift 6.4 compiler, `SWIFT_VERSION = 5.0`,
   `SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor`.
 
@@ -67,9 +82,10 @@ Folders:
 ## Domain engine (`Tilipaiva/Payday/`)
 
 - `BankingCalendar` — `isBankingDay`, `bankingDay(onOrBefore/onOrAfter:)`,
-  `next/previousBankingDay`, `first/lastBankingDay(of:)`, `lastWeekday(of:)`,
-  `nthBankingDay(_:of:)`, `holidays(in:)`, `dayCount(from:to:)`. Holidays are
-  derived (fixed dates + Easter via `Easter.monthAndDay`); no yearly data.
+  `next/previousBankingDay`, `start/lastDay(of:)`, `first/lastBankingDay(of:)`,
+  `lastWeekday(of:)`, `nthBankingDay(_:of:)`, `day(_:of:)`, `holidays(in:)`,
+  `adding(days:to:)`, `dayCount(from:to:)`. Holidays are derived (fixed dates +
+  Easter via `Easter.monthAndDay`); no yearly data.
 - `PaymentRule` — Codable enum with a `type` discriminator; supports
   `fixedDayOfMonth` (with `shift` and `alsoShiftOnWeekdays`),
   `firstBankingDayOfMonth`, `lastBankingDayOfMonth`, `lastWeekdayOfMonth`,
@@ -88,8 +104,7 @@ Folders:
 - `PaymentSource`, `PaymentOccurrence`, `UpcomingPayment`, `Month` (with `next`
   and `previous`), `Weekday`.
 - `SharedDefaults` + `PaymentSourceStore` — sources persisted as JSON in the
-  App Group `group.fi.ruupert.Tilipaiva`, and the hero's `progressStyle` beside
-  them (`SharedDefaults.shared`, suite fallback to `.standard`).
+  App Group `group.fi.ruupert.Tilipaiva` (suite fallback to `.standard`).
 - App side: `PaymentSourcesModel` (`@Observable`, MainActor) owns sources and
   calls `WidgetCenter.shared.reloadAllTimelines()` on change.
 
@@ -109,8 +124,9 @@ Note: `PaymentSource` uses the synthesized Codable, so JSON must include `name`
   `Tilipaiva/Shared/Localizable.xcstrings` (source `en`, provide `fi`). Use
   literal keys; the plural key is `%lld days`. Benefit names come from
   `Benefits.json`, not the catalog.
-- Design constants live in `Shared/Design.swift`. Respect Dynamic Type
-  (`@ScaledMetric` for the hero number); icon-only buttons need text labels.
+- Design constants live in `Shared/Design.swift` (`heroNumberSize`,
+  `heroRingSize`, `ringLineWidth`). Respect Dynamic Type (`@ScaledMetric` for the
+  hero number and its ring); icon-only buttons need text labels.
 - Required Kela disclaimer string ships wherever Kela dates appear
   (`PaymentDisclaimer`): "Payment days are estimates. Check the up-to-date
   information in OmaKela."
@@ -157,22 +173,23 @@ Note: `PaymentSource` uses the synthesized Codable, so JSON must include `name`
   below it.** Stacking all four inside the ring read as a crammed list, so the
   ring answers "how long" and the two lines under it answer "what and when".
   `CountdownDayView` (shared with the Lock Screen circular widget) draws the
-  number with its unit; the phrase "6 days" at hero size is wider than the ring,
-  so inside a ring the unit drops to its own line, and without a ring — the
-  switch is off, or the wait is not known — the two share a line and read as one.
+  number with its unit always stacked underneath. A phrase like "6 days" at hero
+  size is wider than the ring, and putting the unit beside the number pushed the
+  number off-centre — a trial of both is why the unit sits where it does now.
   The unit is the full word (`day`/`days` → "päivä"/"päivää"), not an
   abbreviation, and it is set in the rounded design to match the number.
 - **The hero's progress shows the wait between two payments**, not the calendar
-  month: `PaymentCycle.previous` → `next`. Settings has a switch, "Progress ring"
-  (fi "Edistymiskehä"), and it drives `ProgressStyle` — `ring` or `none` — stored
-  in the shared defaults under `progressStyle`, with the ring on by default. A
-  `bar` style and a picker both came and went: with two states a switch says it
-  best. The day count always stays; the ring is decoration and is hidden from
-  assistive technologies. The widget does not draw it yet, though the preference
-  is already shared.
+  month: `PaymentCycle.previous` → `next`, always drawn as a ring. There was a
+  style preference (a `bar` option first, then a switch between `ring` and
+  `none`); both went, and the ring is the only option, so there is no
+  `ProgressStyle` and nothing to store. A ring needs a wait to measure: when the
+  source has no earlier payment to count from, the ring is left out and the
+  countdown stands on its own. The ring is decoration and is hidden from
+  assistive technologies, and the widget does not draw it yet.
 - Brand accent is a "payday green" (light `#1F8A5A`, dark `#4FD1A0`); the App
-  Icon is a sage-green calendar tile with a € disc, made with Icon Composer
-  (`Tilipaiva/AppIcon.icon`). The source artwork is
+  Icon is a sage-grey and cream calendar tile with a € disc on that green (the
+  `fill` in `icon.json`, with the artwork at a 90 % scale), made with Icon
+  Composer (`Tilipaiva/AppIcon.icon`). The source artwork is
   `Tilipaiva/AppIcon.icon/Assets/tilipaiva.svg`, authored in Inkscape — edit and
   re-export from there, and keep `icon.json`'s `image-name` in sync with the
   asset file name. **The SVG must contain no `<text>` elements** (Icon Composer
@@ -182,13 +199,16 @@ Note: `PaymentSource` uses the synthesized Codable, so JSON must include `name`
 
 ## Docs site (GitHub Pages)
 
+The repo is `rkoponen/tilipaiva` on GitHub, and `origin` tracks `main`, so the
+site and the app ship from the same push.
+
 `docs/` is published to GitHub Pages at **https://tilipäivä.ruupert.fi** with the
 same setup as Viikkonumero: source `main` / `/docs`, legacy build, the custom
 domain in `docs/CNAME`, HTTPS enforced.
 
 The custom domain is an **IDN**: `tilipäivä.ruupert.fi` = punycode
 `xn--tilipiv-9wac.ruupert.fi`. Both `docs/CNAME` and the Pages setting use the
-punycode, and `AppStore.md` / `AboutView.swift` use the readable Unicode form
+punycode, and `AppStore.md` / `SettingsView.swift` use the readable Unicode form
 (`URL(string:)` IDNA-encodes a Unicode host). The plain ASCII
 `tilipaiva.ruupert.fi` is a **different name and has no DNS record** — don't use
 it.
