@@ -108,6 +108,28 @@
         }
       }
     },
+    "Celebrate a payday" : {
+      "comment" : "Label of the switch that turns the payday confetti on or off.",
+      "localizations" : {
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Juhli tilipäivää"
+          }
+        }
+      }
+    },
+    "Celebration" : {
+      "comment" : "Section header for the payday celebration switch in the settings tab.",
+      "localizations" : {
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Juhla"
+          }
+        }
+      }
+    },
     "day" : {
       "comment" : "Unit under a day count of one in the hero countdown, where English needs the singular.",
       "localizations" : {
@@ -425,6 +447,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Maksupäivät ovat arvioita. Tarkista ajantasainen tieto OmaKelasta."
+          }
+        }
+      }
+    },
+    "Plays once when you first open the app on a payment day." : {
+      "comment" : "Footer under the payday celebration switch, explaining when it plays.",
+      "localizations" : {
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toistuu kerran, kun avaat sovelluksen maksupäivänä."
           }
         }
       }

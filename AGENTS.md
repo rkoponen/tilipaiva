@@ -43,6 +43,10 @@ xcodebuild test -scheme Tilipaiva \
     "/var/mobile/Containers/Data/Application/$(basename "$APP")/Library/Preferences/group.fi.ruupert.Tilipaiva" \
     paymentSources -data "$HEX"
   ```
+  After the app has run, the group plist in the container and what `defaults read`
+  reports inside the simulator can disagree — the app's own writes turned up in
+  the plist, the seeded sources the other way round. Read both (`plutil -p` on the
+  file, `defaults read` in the sim) before believing that a stored value is gone.
 - Toolkit: Xcode 27.0, Swift 6.4 compiler, `SWIFT_VERSION = 5.0`,
   `SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor`.
 
@@ -229,6 +233,36 @@ Note: `PaymentSource` uses the synthesized Codable, so JSON must include `name`
     until the count, the one thing the card is for, was the part that gave way
     ("3 p… ti 20.10.") — and then on a line with the name, before being dropped as
     unnecessary. A `minimumScaleFactor(0.6)` stays behind the count.
+- **A payday is celebrated once, when the app is first opened that day.** The hero
+  already says "Today!", so the celebration only decorates it:
+  `PaydayCelebrationView` drops euro signs and green flakes over the Home tab for
+  about three and a half seconds, and `PaydayHaptics` adds a flourish — four taps
+  that get firmer and tighter, landing on a thump with two faint sparks after it.
+  That shape is why it is written out with Core Haptics: the system's own patterns
+  are single events, and `.success` (two even taps) and a lone `.impact` both came
+  and went as too flat for the moment. The engine and the pattern are built in
+  `prepare()` before the tap is due, because a cold engine starts too slowly; if
+  the engine will not start, the same four-tap rise is played with the impact
+  generators, and the sparks are dropped there since a light impact is too dull to
+  read as one. The tap waits a third of a second before it fires: feedback asked
+  for while the launch transition is still running can be dropped, and the day is
+  already marked as played, so a dropped tap would not come round again. Nothing
+  is written in words, which is why the celebration needs no localization, and it
+  is decoration, so assistive technologies skip it and it never takes a tap. The
+  pieces come from a seeded generator (`ConfettiParticle.burst()`), so the burst
+  scatters but is the same on every launch and a screenshot stays comparable with
+  the last one; a euro sign only leans on the way down, since a tilted `eurosign`
+  reads as a scrambled glyph. Under Reduce Motion the pieces do not fall — they
+  fade in where they rest. `PaydayCelebration` remembers the day it last played in
+  the shared defaults, so a second launch that day stays quiet, and the day it
+  compares is the Finnish one, the same day the payment rules use. It is on by
+  default, and its switch ("Celebrate a payday" under "Celebration") is the app's
+  first real preference in Settings.
+- **The celebration is triggered from `ContentView`, next to `scenePhase`**, and
+  not from the hero: `.task` covers a launch, since `scenePhase` can already be
+  `.active` on the first render and never change. Both paths ask the same gate,
+  which marks the day as played before the animation starts, so the two cannot
+  play it twice.
 - Brand accent is a "payday green" (light `#1F8A5A`, dark `#4FD1A0`); the App
   Icon is a sage-grey and cream calendar tile with a € disc on that green (the
   `fill` in `icon.json`, with the artwork at a 90 % scale), made with Icon
@@ -290,5 +324,15 @@ it.
   Xcode 27 ships no Simulator.app, so the circular, inline and rectangular
   accessories all want a hand check on a device: what they *look* like there
   (vibrancy, the wallpaper, the user's tint) is not what a rendered PNG shows.
+- **The celebration and its switch still want a hand check on a device.** The
+  haptic tap does not play in the simulator and Settings cannot be tapped from the
+  command line, so neither has been seen working. Two things are worth knowing
+  when it cannot be felt on a device: the ring/silent switch does **not** suppress
+  haptics (its "Play Haptics in Silent Mode" setting is about ring and alert
+  vibration), while the system-wide Haptics switch under Settings → Sounds &
+  Haptics does, and iPads and iPods have no Taptic Engine at all. The confetti
+  itself is on screen for a few seconds, which is easy to miss when screenshotting
+  a launch; the reliable way to photograph it is to raise `ConfettiParticle`'s
+  `duration` for one build.
 - The app icon art came from the designer as an Inkscape SVG; further artwork
   polish should come as a new SVG, not by editing `icon.json` geometry.

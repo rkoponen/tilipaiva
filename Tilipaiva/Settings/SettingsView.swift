@@ -1,7 +1,13 @@
 import SwiftUI
 
-/// The settings tab: information about the app.
+/// The settings tab: the app's preferences and information about it.
 struct SettingsView: View {
+    /// Whether the payday confetti and its tap are wanted. The key is shared
+    /// with `PaydayCelebration`, which reads the same store, and an absent value
+    /// means on.
+    @AppStorage(PaydayCelebration.enabledKey, store: SharedDefaults.defaults(suiteName: SharedDefaults.appGroupID))
+    private var celebratesPaydays = true
+
     // `URL(string:)` IDNA-encodes the host, so the Unicode domain ("tilipäivä")
     // is fine here; the punycode form is xn--tilipiv-9wac.ruupert.fi.
     private let supportURL = URL(string: "https://tilipäivä.ruupert.fi/")!
@@ -10,6 +16,14 @@ struct SettingsView: View {
     var body: some View {
         NavigationStack {
             List {
+                Section {
+                    Toggle("Celebrate a payday", isOn: $celebratesPaydays)
+                } header: {
+                    Text("Celebration")
+                } footer: {
+                    Text("Plays once when you first open the app on a payment day.")
+                }
+
                 Section("About") {
                     LabeledContent("Version", value: version)
 
