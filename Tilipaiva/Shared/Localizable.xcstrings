@@ -1,6 +1,28 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "%@ arrive today." : {
+      "comment" : "Notification body when more than one payment arrives on the same day. The placeholder is the payments' names joined by the system list formatter, e.g. \"Salary and child benefit arrive today.\".",
+      "localizations" : {
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ saapuvat tänään."
+          }
+        }
+      }
+    },
+    "%@ arrives today." : {
+      "comment" : "Notification body when one payment arrives today. The placeholder is the payment's name, e.g. \"Salary arrives today.\".",
+      "localizations" : {
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ saapuu tänään."
+          }
+        }
+      }
+    },
     "%lld days" : {
       "comment" : "Days until the next payment, e.g. \"12 days\". The placeholder is the number of days.",
       "localizations" : {
@@ -396,6 +418,17 @@
         }
       }
     },
+    "Notifications" : {
+      "comment" : "Section header for the payment reminder switch in Settings.",
+      "localizations" : {
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ilmoitukset"
+          }
+        }
+      }
+    },
     "Nth" : {
       "comment" : "Ordinal for the Nth banking day or Nth weekday of the month.",
       "localizations" : {
@@ -429,6 +462,17 @@
         }
       }
     },
+    "One reminder at 9 a.m. on a payment day." : {
+      "comment" : "Footer under the payment reminder switch, explaining when it arrives.",
+      "localizations" : {
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yksi muistutus klo 9 maksupäivänä."
+          }
+        }
+      }
+    },
     "Payday rule" : {
       "comment" : "Header of the section that configures when a source pays.",
       "localizations" : {
@@ -440,6 +484,17 @@
         }
       }
     },
+    "Payday!" : {
+      "comment" : "Title of the payment reminder notification.",
+      "localizations" : {
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tilipäivä!"
+          }
+        }
+      }
+    },
     "Payment days are estimates. Check the up-to-date information in OmaKela." : {
       "comment" : "Required disclaimer shown wherever Kela payment days appear.",
       "localizations" : {
@@ -447,6 +502,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Maksupäivät ovat arvioita. Tarkista ajantasainen tieto OmaKelasta."
+          }
+        }
+      }
+    },
+    "Payment reminder" : {
+      "comment" : "Label of the switch that turns the payment day notification on or off.",
+      "localizations" : {
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Maksupäivämuistutus"
           }
         }
       }
@@ -571,6 +637,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tänään!"
+          }
+        }
+      }
+    },
+    "Turn on in Settings" : {
+      "comment" : "Row that opens the system Settings when the notification permission has been turned off there.",
+      "localizations" : {
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kytke päälle Asetuksissa"
           }
         }
       }

@@ -2,6 +2,7 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var model = PaymentSourcesModel()
+    @State private var notifications = PaydayNotifications()
     @State private var editorItem: SourceEditorItem?
 
     /// Whether the payday confetti is on screen.
@@ -34,7 +35,7 @@ struct ContentView: View {
             }
 
             Tab("Settings", systemImage: "gearshape") {
-                SettingsView()
+                SettingsView(notifications: notifications)
             }
         }
         .sheet(item: $editorItem) { item in
@@ -44,12 +45,27 @@ struct ContentView: View {
             if phase == .active {
                 model.reload()
                 celebrateIfPayday()
+                rescheduleReminders()
             }
+        }
+        // A source that is added or removed changes the payment days the
+        // reminders are for; the first one ever saved is also where the
+        // permission is asked, since a reminder needs something to remind about.
+        .onChange(of: model.sources) { _, _ in
+            rescheduleReminders()
         }
         // `scenePhase` can already be `.active` on the first render, so a
         // foreground change is not enough to catch a launch on a payday.
         .task {
             celebrateIfPayday()
+            await notifications.reschedule()
+        }
+    }
+
+    /// Brings the scheduled reminders back in line with the sources and the day.
+    private func rescheduleReminders() {
+        Task {
+            await notifications.reschedule()
         }
     }
 

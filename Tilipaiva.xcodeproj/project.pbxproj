@@ -56,6 +56,7 @@
 				AppIcon.icon,
 				Assets.xcassets,
 				ContentView.swift,
+				Notifications,
 				TilipaivaApp.swift,
 			);
 			target = 000000000000000300000000 /* TilipaivaWidgetExtension */;

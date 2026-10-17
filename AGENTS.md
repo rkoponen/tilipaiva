@@ -64,10 +64,10 @@ display name "Tilipäivä".
 
 The widget target compiles the app's folder **minus an exception list** in
 `project.pbxproj` (`PBXFileSystemSynchronizedBuildFileExceptionSet`, id `...045`).
-That list holds only `AppIcon.icon`, `Assets.xcassets`, `ContentView.swift` and
-`TilipaivaApp.swift`, so the app-only folders below are currently compiled into
-the widget as well (it builds, but that is not the intent; the widget's object
-files show it).
+That list holds `AppIcon.icon`, `Assets.xcassets`, `ContentView.swift`,
+`Notifications` and `TilipaivaApp.swift`, so the app-only folders below are
+currently compiled into the widget as well (it builds, but that is not the
+intent; the widget's object files show it).
 
 > **When you add an app-only file or folder under `Tilipaiva/`, add it to that
 > exception list**, or the widget will try to compile it.
@@ -78,7 +78,8 @@ Folders:
 - `Tilipaiva/Shared/` — shared views, `Design` constants, `Localizable.xcstrings`.
   `CountdownDayView` lives here because both the app's hero and the Lock Screen
   circular widget draw the same number-over-unit label.
-- `Tilipaiva/Home/`, `SourceEditor/`, `Settings/` — app-only UI.
+- `Tilipaiva/Home/`, `SourceEditor/`, `Settings/`, `Notifications/` — app-only UI
+  and the local notification the app sends.
 - `TilipaivaWidget/` — widget target.
 - `TilipaivaTests/` — tests. `docs/` — GitHub Pages site (`tilipäivä.ruupert.fi`).
 - `AppStore.md` — App Store metadata draft.
@@ -263,6 +264,34 @@ Note: `PaymentSource` uses the synthesized Codable, so JSON must include `name`
   `.active` on the first render and never change. Both paths ask the same gate,
   which marks the day as played before the animation starts, so the two cannot
   play it twice.
+- **The one notification is local and pre-scheduled, not pushed.** There is no
+  server and no account, so the reminder is a `UNCalendarNotificationTrigger`
+  per payment day — delivered by the system even if the app never runs again.
+  A repeating trigger cannot express a payday: banking-day shifting moves the
+  date month to month. `PaydayReminderSchedule` (app-only, in
+  `Notifications/`) is the pure part — sources and a date in, one
+  `PaydayReminder` per payment day out, grouped with `ListFormatter` so two
+  sources paying the same day are one banner ("Palkka ja elatustuki saapuvat
+  tänään"); the unit tests cover it. `PaydayNotifications` is the thin part that
+  owns `UNUserNotificationCenter`.
+  - The reminder is scheduled **at 9 a.m. Finnish time** (banks settle
+    overnight), carried as components in `BankingCalendar.timeZone`, so it
+    follows the payment day rather than the device's. A day whose Finnish
+    morning has gone is left out.
+  - `PaydayReminderSchedule.limit` is 20 days — iOS keeps at most 64 pending
+    requests, so it is a sliding window rather than every date the rules can
+    produce. `ContentView` reschedules on launch, on every return to the
+    foreground and whenever the sources change; `PaydayNotifications` clears its
+    own `payday.`-prefixed pending requests before adding the new ones.
+  - The permission is asked **when the first source is saved**, not at launch:
+    there is nothing to remind about before that. `PaydayNotifications` keeps
+    the prompt and the switch in one place, so a refusal leaves the switch off
+    and turns the Settings row into "Turn on in Settings". The preference key
+    (`paydayRemindersEnabled`) means **off** when absent, unlike the
+    celebration's.
+  - No `UNUserNotificationCenterDelegate`: a notification arriving while the app
+    is open is not presented, so the reminder never lands on top of the payday
+    confetti.
 - Brand accent is a "payday green" (light `#1F8A5A`, dark `#4FD1A0`); the App
   Icon is a sage-grey and cream calendar tile with a € disc on that green (the
   `fill` in `icon.json`, with the artwork at a 90 % scale), made with Icon
@@ -319,6 +348,14 @@ it.
 - `Tilipaiva.xcodeproj/xcuserdata/...` is already ignored and untracked — nothing
   to clean up (done).
 - App Store Connect submission, screenshots, and final icon art are manual.
+- **The reminder has been hand-checked up to the system prompt, on a device
+  too.** The alert ("Tilipäivä" Would Like to Send You Notifications) has been
+  seen on an iPhone, and shows up in the simulator as well when a source is
+  seeded; it arrives as the first source is saved, not at launch, which is the
+  design working. What happens after the answer still wants a check: the switch
+  turning itself on (or staying off after a refusal, with the "Turn on in
+  Settings" row in its place), and a banner at nine. The 9 a.m. trigger is tested
+  for the Finnish day and hour, not for delivery.
 - **The Lock Screen widgets have only been seen as rendered images.** A widget
   cannot be added to the Lock Screen without tapping it in the Simulator, and
   Xcode 27 ships no Simulator.app, so the circular, inline and rectangular
