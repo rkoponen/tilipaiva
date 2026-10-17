@@ -348,14 +348,16 @@ it.
 - `Tilipaiva.xcodeproj/xcuserdata/...` is already ignored and untracked — nothing
   to clean up (done).
 - App Store Connect submission, screenshots, and final icon art are manual.
-- **The reminder has been hand-checked up to the system prompt, on a device
-  too.** The alert ("Tilipäivä" Would Like to Send You Notifications) has been
-  seen on an iPhone, and shows up in the simulator as well when a source is
-  seeded; it arrives as the first source is saved, not at launch, which is the
-  design working. What happens after the answer still wants a check: the switch
-  turning itself on (or staying off after a refusal, with the "Turn on in
-  Settings" row in its place), and a banner at nine. The 9 a.m. trigger is tested
-  for the Finnish day and hour, not for delivery.
+- **The reminder has been hand-checked up to the banner.** The alert
+  ("Tilipäivä" Would Like to Send You Notifications) has been seen on an iPhone,
+  and shows up in the simulator as well when a source is seeded; it arrives as
+  the first source is saved, not at launch, which is the design working.
+  Allowing it turns the switch in Settings on, which has been seen on a device
+  too. What is still unproven is delivery itself — the banner at nine on a
+  payment day, which the trigger's test covers only as a Finnish day and hour —
+  and the refusal path, the "Turn on in Settings" row, which needs the
+  permission to be taken away again. The quickest way to see delivery: add a
+  throwaway source that pays tomorrow and watch the morning.
 - **The Lock Screen widgets have only been seen as rendered images.** A widget
   cannot be added to the Lock Screen without tapping it in the Simulator, and
   Xcode 27 ships no Simulator.app, so the circular, inline and rectangular
