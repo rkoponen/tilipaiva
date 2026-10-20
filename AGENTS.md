@@ -274,10 +274,10 @@ Note: `PaymentSource` uses the synthesized Codable, so JSON must include `name`
   sources paying the same day are one banner ("Palkka ja elatustuki saapuvat
   tänään"); the unit tests cover it. `PaydayNotifications` is the thin part that
   owns `UNUserNotificationCenter`.
-  - The reminder is scheduled **at 9 a.m. Finnish time** (banks settle
-    overnight), carried as components in `BankingCalendar.timeZone`, so it
-    follows the payment day rather than the device's. A day whose Finnish
-    morning has gone is left out.
+  - The reminder is scheduled **at 7 a.m. Finnish time** — early enough to
+    greet the payment day rather than half of it — carried as components in
+    `BankingCalendar.timeZone`, so it follows the payment day rather than the
+    device's. A day whose Finnish morning has gone is left out.
   - `PaydayReminderSchedule.limit` is 20 days — iOS keeps at most 64 pending
     requests, so it is a sliding window rather than every date the rules can
     produce. `ContentView` reschedules on launch, on every return to the
@@ -348,16 +348,10 @@ it.
 - `Tilipaiva.xcodeproj/xcuserdata/...` is already ignored and untracked — nothing
   to clean up (done).
 - App Store Connect submission, screenshots, and final icon art are manual.
-- **The reminder has been hand-checked up to the banner.** The alert
-  ("Tilipäivä" Would Like to Send You Notifications) has been seen on an iPhone,
-  and shows up in the simulator as well when a source is seeded; it arrives as
-  the first source is saved, not at launch, which is the design working.
-  Allowing it turns the switch in Settings on, which has been seen on a device
-  too. What is still unproven is delivery itself — the banner at nine on a
-  payment day, which the trigger's test covers only as a Finnish day and hour —
-  and the refusal path, the "Turn on in Settings" row, which needs the
-  permission to be taken away again. The quickest way to see delivery: add a
-  throwaway source that pays tomorrow and watch the morning.
+- **The reminder has been seen working on a device.** The alert was answered,
+  the switch in Settings came on with it, and a banner arrived on a payment day.
+  The only path left untried is the refusal — the "Turn on in Settings" row that
+  replaces the switch once the permission has been taken away again.
 - **The Lock Screen widgets have only been seen as rendered images.** A widget
   cannot be added to the Lock Screen without tapping it in the Simulator, and
   Xcode 27 ships no Simulator.app, so the circular, inline and rectangular
