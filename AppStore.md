@@ -14,7 +14,7 @@ Draft copy for App Store Connect. Verify against the current App Store Connect f
 | Marketing URL | https://tilipäivä.ruupert.fi/ |
 | Privacy policy URL | https://tilipäivä.ruupert.fi/privacy.html |
 | Copyright | © 2026 Ruupert Koponen |
-| Price | Free (see open questions in the build spec) |
+| Price | Free |
 
 The support, marketing, and privacy URLs use the IDN **tilipäivä.ruupert.fi** —
 the same domain in Unicode that the app links to. If a form rejects the non-ASCII
@@ -23,7 +23,7 @@ host, its punycode form is `xn--tilipiv-9wac.ruupert.fi` (same pages).
 Keywords (100 characters, comma-separated, no spaces):
 
 ```
-tilipäivä,maksupäivä,palkka,kela,etuudet,lapsilisä,opintotuki,eläke,pankkipäivä,tulot
+tilipäivä,maksupäivä,palkka,kela,etuudet,lapsilisä,opintotuki,eläke,pankkipäivä,tulot,muistutus
 ```
 
 ## Privacy
@@ -47,6 +47,7 @@ Tilipäivä laskee seuraavan maksupäivän puolestasi ja osaa suomalaiset pankki
 - Monipuoliset maksusäännöt: kuukauden päivä, ensimmäinen tai viimeinen pankkipäivä, kuukauden viimeinen arkipäivä, n:s pankkipäivä ja n:s viikonpäivä
 - Kelan tuet: kansaneläke, kuntoutustuki ja työkyvyttömyyseläke, elatustuki, lapsilisä, opintotuki, lasten kotihoidon tuki sekä joustava ja osittainen hoitoraha
 - Widget koti- ja lukitusnäytölle
+- Muistutus maksupäivän aamuna
 
 Maksupäivät ovat arvioita. Tarkista ajantasainen tieto OmaKelasta.
 
@@ -63,6 +64,7 @@ Tilipäivä works out your next payment for you, and knows the Finnish banking-d
 - Flexible rules: day of month, first or last banking day, last weekday of the month, the Nth banking day, and the Nth weekday
 - Kela benefits: national pension, rehabilitation allowance and disability pension, child maintenance allowance, child benefit, study grant, child home care allowance, and flexible and partial care allowance
 - Home Screen and Lock Screen widgets
+- A reminder on the morning of a payment day
 
 Kela payment days are estimates. Always check the up-to-date information in OmaKela.
 
