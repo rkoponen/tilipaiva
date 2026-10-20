@@ -64,16 +64,17 @@ display name "Tilipäivä".
 
 The widget target compiles the app's folder **minus an exception list** in
 `project.pbxproj` (`PBXFileSystemSynchronizedBuildFileExceptionSet`, id `...045`).
-That list holds `AppIcon.icon`, `Assets.xcassets`, `ContentView.swift`,
-`Notifications` and `TilipaivaApp.swift`, so the app-only folders below are
-currently compiled into the widget as well (it builds, but that is not the
-intent; the widget's object files show it).
+That list holds `AppIcon.icon`, `Assets.xcassets`, `ContentView.swift` and
+`TilipaivaApp.swift`, so the app-only folders below are compiled into the widget
+as well (it builds, but that is not the intent; the widget's object files show
+it).
 
-> **When you add an app-only file or folder under `Tilipaiva/`, add it to that
-> exception list**, or the widget will try to compile it. Watch the list after
-> adding a file: Xcode 27 rewrites the project file when a synchronized folder's
-> contents change, and the rewrite has been seen to drop an entry from it. If
-> the widget's build log shows `Notifications/*.swift`, the entry went missing.
+> **A folder added to that exception list by hand does not stay there.**
+> `Notifications` was added when the reminder arrived and was gone again after
+> the next build that touched a synchronized folder: Xcode 27 rewrites
+> `project.pbxproj` from its own model, and an entry written into the file drops
+> out. Add app-only code through Xcode if it has to be excluded, or accept that
+> the widget compiles it — the widget's build log says which way it went.
 
 Folders:
 
@@ -117,7 +118,10 @@ Folders:
   calls `WidgetCenter.shared.reloadAllTimelines()` on change.
 
 Note: `PaymentSource` uses the synthesized Codable, so JSON must include `name`
-(required); `benefitID` is optional.
+(required); `benefitID` is optional. The name may be blank — a salary's name is
+optional in the editor, and `title` shows the localized word for the kind
+instead, resolved when it is shown so it follows the app's language rather than
+the one the source was added in.
 
 ## Conventions
 

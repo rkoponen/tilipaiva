@@ -40,10 +40,17 @@ nonisolated struct PaymentSource: Identifiable, Hashable, Codable, Sendable {
     }
 
     /// The localized display name, resolving benefit names from the catalog.
+    ///
+    /// A salary's name is the user's, and it is optional: a name left blank is
+    /// shown as the word for the kind, so a row never reads as empty. The
+    /// fallback is resolved when it is shown rather than when the source is
+    /// saved, so it follows the app's language instead of the one the source
+    /// happened to be added in.
     var title: String {
         if let benefitID, let benefit = BenefitCatalog.bundled.benefit(id: benefitID) {
             return benefit.name.value()
         }
-        return name
+        let trimmed = name.trimmingCharacters(in: .whitespacesAndNewlines)
+        return trimmed.isEmpty ? String(localized: "Salary") : trimmed
     }
 }

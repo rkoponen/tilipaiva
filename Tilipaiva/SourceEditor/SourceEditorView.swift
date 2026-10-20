@@ -42,7 +42,7 @@ struct SourceEditorView: View {
                     }
                 } else {
                     Section {
-                        TextField("Name", text: $draft.name)
+                        TextField("Name", text: $draft.name, prompt: Text("Salary"))
                     }
 
                     Section("Payday rule") {

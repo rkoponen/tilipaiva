@@ -573,7 +573,7 @@
       }
     },
     "Salary" : {
-      "comment" : "Payment source kind for a salary.",
+      "comment" : "Payment source kind for a salary; also the placeholder of the optional name field and the name a salary without one is shown under.",
       "localizations" : {
         "fi" : {
           "stringUnit" : {
