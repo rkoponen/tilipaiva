@@ -10,8 +10,9 @@ import Foundation
 nonisolated struct PaydayReminderSchedule: Sendable {
     /// The Finnish morning the reminder arrives at, as an hour of the day.
     ///
-    /// Banks settle payments overnight, so the money is in the account by nine.
-    static let hour = 9
+    /// Early enough to greet the day the money lands on, rather than after half
+    /// of it has gone: the reminder is about the payday, not about the balance.
+    static let hour = 7
 
     /// How many payment days are scheduled ahead.
     ///
@@ -63,7 +64,7 @@ nonisolated struct PaydayReminderSchedule: Sendable {
         return Array(reminders.prefix(Self.limit))
     }
 
-    /// The Finnish morning of a payment day: nine o'clock in Helsinki.
+    /// The Finnish morning of a payment day: seven o'clock in Helsinki.
     func moment(for day: Date) -> Date {
         zone.date(byAdding: .hour, value: Self.hour, to: calendar.startOfDay(day))!
     }

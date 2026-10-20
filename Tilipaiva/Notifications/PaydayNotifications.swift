@@ -140,7 +140,7 @@ final class PaydayNotifications {
 
         // The Finnish morning, carried as components in the Finnish time zone so
         // the reminder follows the payment day rather than the device's. Should
-        // the system read them as local instead, they still land at nine in the
+        // the system read them as local instead, they still land at seven in the
         // morning of the payment day.
         var components = Calendar.current.dateComponents(
             [.year, .month, .day, .hour, .minute],

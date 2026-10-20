@@ -42,7 +42,7 @@ struct SettingsView: View {
                 } header: {
                     Text("Notifications")
                 } footer: {
-                    Text("One reminder at 9 a.m. on a payment day.")
+                    Text("One reminder at 7 a.m. on a payment day.")
                 }
 
                 Section("About") {

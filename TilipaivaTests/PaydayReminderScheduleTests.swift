@@ -65,10 +65,10 @@ struct PaydayReminderScheduleTests {
     @Test func aMorningThatHasGoneIsLeftOut() {
         let sources = [source("Palkka", .fixedDayOfMonth(day: 20, shift: .none, alsoShiftOnWeekdays: []))]
 
-        // Before nine the day still counts; from nine on it does not, since the
+        // Before seven the day still counts; from seven on it does not, since the
         // system would not deliver a trigger set in the past.
-        #expect(schedule.reminders(for: sources, onOrAfter: day(2026, 10, 20, 8)).first?.day == day(2026, 10, 20))
-        #expect(schedule.reminders(for: sources, onOrAfter: day(2026, 10, 20, 9)).first?.day == day(2026, 11, 20))
+        #expect(schedule.reminders(for: sources, onOrAfter: day(2026, 10, 20, 6)).first?.day == day(2026, 10, 20))
+        #expect(schedule.reminders(for: sources, onOrAfter: day(2026, 10, 20, 7)).first?.day == day(2026, 11, 20))
         #expect(schedule.reminders(for: sources, onOrAfter: day(2026, 10, 20, 13)).first?.day == day(2026, 11, 20))
     }
 

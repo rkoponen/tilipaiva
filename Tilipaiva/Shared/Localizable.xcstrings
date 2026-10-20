@@ -462,13 +462,13 @@
         }
       }
     },
-    "One reminder at 9 a.m. on a payment day." : {
+    "One reminder at 7 a.m. on a payment day." : {
       "comment" : "Footer under the payment reminder switch, explaining when it arrives.",
       "localizations" : {
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Yksi muistutus klo 9 maksupäivänä."
+            "value" : "Yksi muistutus klo 7 maksupäivänä."
           }
         }
       }
