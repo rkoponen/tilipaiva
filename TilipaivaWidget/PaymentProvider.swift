@@ -6,7 +6,7 @@ struct PaymentProvider: TimelineProvider {
     private let calendar = BankingCalendar()
 
     func placeholder(in context: Context) -> PaymentEntry {
-        PaymentEntry(date: .now, payment: nil)
+        PaymentEntry(date: .now, payment: nil, cycle: nil)
     }
 
     func getSnapshot(in context: Context, completion: @escaping (PaymentEntry) -> Void) {
@@ -24,6 +24,11 @@ struct PaymentProvider: TimelineProvider {
     }
 
     private func entry(for date: Date) -> PaymentEntry {
-        PaymentEntry(date: date, payment: resolver.next(for: store.load(), onOrAfter: date))
+        let payment = resolver.next(for: store.load(), onOrAfter: date)
+        return PaymentEntry(
+            date: date,
+            payment: payment,
+            cycle: payment.flatMap { resolver.cycle(endingAt: $0) }
+        )
     }
 }

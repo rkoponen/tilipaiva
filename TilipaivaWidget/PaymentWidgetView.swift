@@ -13,7 +13,7 @@ struct PaymentWidgetView: View {
 
                 switch family {
                 case .accessoryCircular:
-                    CircularCountdownView(days: days)
+                    CircularCountdownView(days: days, fraction: entry.cycle.map { $0.fraction(on: entry.date) })
 
                 case .accessoryInline:
                     // One line, with the countdown last: the line truncates from

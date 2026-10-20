@@ -41,7 +41,8 @@ struct RectangularCountdownView: View {
         payment: UpcomingPayment(
             source: .salary(name: "Palkka", rule: .lastBankingDayOfMonth),
             occurrence: PaymentOccurrence(sourceID: UUID(), date: .now.addingTimeInterval(6 * 86_400))
-        )
+        ),
+        cycle: nil
     )
 
     // A name long enough to test the wrapping.
@@ -50,7 +51,8 @@ struct RectangularCountdownView: View {
         payment: UpcomingPayment(
             source: .salary(name: "Joustava hoitoraha ja osittainen hoitoraha", rule: .lastBankingDayOfMonth),
             occurrence: PaymentOccurrence(sourceID: UUID(), date: .now.addingTimeInterval(6 * 86_400))
-        )
+        ),
+        cycle: nil
     )
 
     // The payment lands today.
@@ -59,6 +61,7 @@ struct RectangularCountdownView: View {
         payment: UpcomingPayment(
             source: .salary(name: "Palkka", rule: .lastBankingDayOfMonth),
             occurrence: PaymentOccurrence(sourceID: UUID(), date: .now)
-        )
+        ),
+        cycle: nil
     )
 }

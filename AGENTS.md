@@ -70,7 +70,10 @@ currently compiled into the widget as well (it builds, but that is not the
 intent; the widget's object files show it).
 
 > **When you add an app-only file or folder under `Tilipaiva/`, add it to that
-> exception list**, or the widget will try to compile it.
+> exception list**, or the widget will try to compile it. Watch the list after
+> adding a file: Xcode 27 rewrites the project file when a synchronized folder's
+> contents change, and the rewrite has been seen to drop an entry from it. If
+> the widget's build log shows `Notifications/*.swift`, the entry went missing.
 
 Folders:
 
@@ -198,29 +201,38 @@ Note: `PaymentSource` uses the synthesized Codable, so JSON must include `name`
   `ProgressStyle` and nothing to store. A ring needs a wait to measure: when the
   source has no earlier payment to count from, the ring is left out and the
   countdown stands on its own. The ring is decoration and is hidden from
-  assistive technologies, and it belongs to the hero: the Lock Screen widgets
-  show the day count without it.
+  assistive technologies. The Lock Screen's circular widget wears the same wait
+  as a ring, and its own count inside — see below.
 - **The Lock Screen accessories are the same content in three shapes.**
   `CountdownDayView.UnitStyle.short` is used in the circular one, because the
   Finnish "päivää" is wider than the circle it would sit in: the `day (short)` and
   `days (short)` keys are "pv" in Finnish and stay "day"/"days" in English. The
   full word overflows, and it has no `minimumScaleFactor` to shrink it; the hero
   keeps the full word, since its ring has the room.
-  - The circular one (`accessoryCircular`) stacks three rows the way the system's
-    own small widgets do — a number, its label, and the app's mark.
-    `CircularCountdownView` is the day count, the short unit, and
-    `eurosign.circle.fill`, the euro disc the App Icon wears: a system symbol
-    rather than an emoji, so it takes the Lock Screen's rendering instead of
-    sitting on top of it in colour (the 💰 emoji also carries a dollar sign, which
-    is the wrong currency here). The rows are sized to fit the circle down to
-    50 pt, and the 6 pt inset lets "Tänään!" scale down instead of running over
-    the edge.
-    - The hero's ring was tried in the circle too, and dropped: at that size it
-      read as clutter around the count rather than as progress, so `PaymentRing`,
-      the `AccessoryWidgetBackground()` and the `PaymentCycle` that `PaymentEntry`
-      carried for it all came back out. For the record, if a ring is ever wanted
-      there: the system's own accessory circular ring (the Weather widget's)
-      measures 5.6 pt across a 58 pt circle — measured by rendering
+  - The circular one (`accessoryCircular`) is the day count and its short unit
+    inside the system's own progress ring: `CircularCountdownView` puts
+    `CountdownDayView` in the `currentValueLabel` of a
+    `Gauge(value:).gaugeStyle(.accessoryCircularCapacity)`, whose value is
+    `PaymentCycle.fraction(on:)` for the entry's day. The ring is the system's
+    rather than a drawn one because it is the ring the neighbouring Lock Screen
+    widgets wear, so the countdown sits in their company; the hero keeps its own
+    heavier `PaymentRing` at 12 pt, as its own look.
+    - `.accessoryCircularCapacity` ignores the gauge's `label`, so the euro disc
+      the App Icon wears does not appear here. It was tried inside the value slot
+      beside the count and crowded the unit; the count is what the card is for.
+      The same style leaves the number a step smaller than it was — `title3`
+      instead of `title2` — because the ring takes the circle's edge.
+    - Do not use plain `.accessoryCircular` for this: that style is a dial, not a
+      ring — an arc open at the bottom with a dot for the value — and it draws its
+      `label` into that opening, on top of the unit. It was rendered beside the
+      capacity style in the simulator and read as a speedometer.
+    - Without a cycle — a source with no earlier payment — there is no share to
+      draw, so the count stands alone, as in the hero. The gauge needs a value,
+      which is why the `fraction` is optional and the ring is the conditional part.
+    - `PaymentEntry` carries the `PaymentCycle` for it, which the provider
+      resolves alongside the next payment. For the record, the system's own
+      accessory circular ring (the Weather widget's) measures 5.6 pt across a
+      58 pt circle — measured by rendering
       `Gauge(value:).gaugeStyle(.accessoryCircularCapacity)` in the simulator and
       scanning the pixels.
   - The inline one (`accessoryInline`) is one line, "Palkka · 6 päivää", with the
@@ -357,6 +369,10 @@ it.
   Xcode 27 ships no Simulator.app, so the circular, inline and rectangular
   accessories all want a hand check on a device: what they *look* like there
   (vibrancy, the wallpaper, the user's tint) is not what a rendered PNG shows.
+  The circular one's ring is the most interesting of the three to check, since it
+  was chosen from a render in the app over `AccessoryWidgetBackground()` rather
+  than on a wall — the shape is right, but the gauge's ring and the count inside
+  it have not been seen in the Lock Screen's own rendering.
 - **The celebration and its switch still want a hand check on a device.** The
   haptic tap does not play in the simulator and Settings cannot be tapped from the
   command line, so neither has been seen working. Two things are worth knowing
