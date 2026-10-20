@@ -309,14 +309,15 @@ the one the source was added in.
     is open is not presented, so the reminder never lands on top of the payday
     confetti.
 - Brand accent is a "payday green" (light `#1F8A5A`, dark `#4FD1A0`); the App
-  Icon is a sage-grey and cream calendar tile with a € disc on that green (the
-  `fill` in `icon.json`, with the artwork at a 90 % scale), made with Icon
+  Icon is a gold coin with a cream € on it, centred at 1.5× over a gradient of
+  that green (the `fill` and the `position` in `icon.json`), made with Icon
   Composer (`Tilipaiva/AppIcon.icon`). The source artwork is
-  `Tilipaiva/AppIcon.icon/Assets/tilipaiva.svg`, authored in Inkscape — edit and
-  re-export from there, and keep `icon.json`'s `image-name` in sync with the
-  asset file name. **The SVG must contain no `<text>` elements** (Icon Composer
-  warns about font-dependent text): convert type with `Path → Object to Path`
-  and save as **Inkscape SVG**. Saving as *Plain SVG* silently drops the layer
+  `Tilipaiva/AppIcon.icon/Assets/tilipaiva-kolikko.svg`, authored in Inkscape —
+  edit and re-export from there, and keep `icon.json`'s `image-name` in sync with
+  the asset file name. **The SVG must contain no `<text>` elements** (Icon
+  Composer warns about font-dependent text): convert type with
+  `Path → Object to Path` and save as **Inkscape SVG**. Saving as *Plain SVG*
+  silently drops the layer
   and the icon renders as an empty background square.
 
 ## Docs site (GitHub Pages)
