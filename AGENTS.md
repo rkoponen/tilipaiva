@@ -9,11 +9,15 @@ you make decisions or change conventions.
 
 ## Build & test
 
-`xcodebuild` is **not** on the default toolchain (active developer dir is
-CommandLineTools), so always set `DEVELOPER_DIR`:
+The active developer directory is Xcode (`xcode-select -p` →
+`/Applications/Xcode.app/Contents/Developer`), so `xcodebuild` and
+`xcrun simctl` are on the default toolchain and need no environment. It used to
+be CommandLineTools, where neither was visible; if `xcrun simctl …` ever says
+"unable to find utility", that is what has happened again — put it back with
+`sudo xcode-select -s /Applications/Xcode.app/Contents/Developer`, or prefix the
+one command with `DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer`.
 
 ```sh
-export DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer
 xcodebuild -list -project Tilipaiva.xcodeproj
 xcodebuild test -scheme Tilipaiva \
   -destination 'platform=iOS Simulator,name=iPhone 18 Pro' \
