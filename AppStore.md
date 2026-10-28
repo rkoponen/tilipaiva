@@ -34,7 +34,7 @@ tilipäivä,maksupäivä,palkka,kela,etuudet,lapsilisä,opintotuki,eläke,pankki
 
 ## Promotional text (fi)
 
-Tilipäivä laskee seuraavan tilipäivän ja yleisimpien Kelan etuuksien maksupäivät automaattisesti suomalaisella pankkipäivälogiikalla. Ei tilejä, ei mainoksia, ei tiedonkeruuta.
+Näe tulevat tilipäivät vilauksella.
 
 ## Description (fi)
 
