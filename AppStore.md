@@ -38,20 +38,17 @@ Näe tulevat tilipäivät vilauksella.
 
 ## Description (fi)
 
-Montako päivää tilipäivään? Tilipäivä vastaa yhdellä silmäyksellä.
+Montako päivää on seuraavaan maksuun? Tilipäivä vastaa.
 
-Tilipäivä laskee seuraavan maksupäivän puolestasi ja osaa suomalaiset pankkipäiväsäännöt: arkipäivät ilman pankkivapaapäiviä, pääsiäinen ja juhannus mukaan lukien. Joka kuukausi ei tarvitse syöttää päivämääriä käsin.
+Päivät lasketaan suomalaisilla pankkipäiväsäännöillä: arkipäivät ilman pankkivapaapäiviä, pääsiäinen ja juhannus mukaan lukien.
 
-- Seuraava tilipäivä isolla numerolla ja päivämäärällä
-- Palkka ja Kelan etuudet samassa näkymässä
-- Monipuoliset maksusäännöt: kuukauden päivä, ensimmäinen tai viimeinen pankkipäivä, kuukauden viimeinen arkipäivä, n:s pankkipäivä ja n:s viikonpäivä
-- Kelan tuet: kansaneläke, kuntoutustuki ja työkyvyttömyyseläke, elatustuki, lapsilisä, opintotuki, lasten kotihoidon tuki sekä joustava ja osittainen hoitoraha
-- Widget koti- ja lukitusnäytölle
-- Muistutus maksupäivän aamuna
+Lisää palkka tai Kelan etuus ja valitse sääntö. Kuukauden päivä, ensimmäinen tai viimeinen pankkipäivä, n:s viikonpäivä tai joka toinen viikko. Loput hoitaa sovellus.
+
+Widget näyttää jäljellä olevat päivät koti- ja lukitusnäytöllä. Maksupäivänä saat halutessasi muistutuksen, ja sovellus juhlii sitä konfetilla.
 
 Maksupäivät ovat arvioita. Tarkista ajantasainen tieto OmaKelasta.
 
-Tilipäivä ei kerää mitään tietoja. Kaikki lasketaan laitteellasi.
+Ei tilejä, ei mainoksia, ei tiedonkeruuta.
 
 ## Description (en)
 
