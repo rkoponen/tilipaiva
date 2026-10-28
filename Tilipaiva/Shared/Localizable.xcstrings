@@ -92,7 +92,7 @@
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Lisää tulolähde"
+            "value" : "Lisää tulonlähde"
           }
         }
       }
@@ -163,6 +163,17 @@
         }
       }
     },
+    "Day" : {
+      "comment" : "Label for the day-of-month picker in a payday rule.",
+      "localizations" : {
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Päivä"
+          }
+        }
+      }
+    },
     "day (short)" : {
       "comment" : "Short unit under a day count of one in the Lock Screen circular widget, where the full word is wider than the circle.",
       "localizations" : {
@@ -176,17 +187,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "pv"
-          }
-        }
-      }
-    },
-    "Day" : {
-      "comment" : "Label for the day-of-month picker in a payday rule.",
-      "localizations" : {
-        "fi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Päivä"
           }
         }
       }
@@ -226,18 +226,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "pv"
-          }
-        }
-      }
-    },
-    "Done" : {
-      "comment" : "Button that dismisses the app information sheet.",
-      "extractionState" : "stale",
-      "localizations" : {
-        "fi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Valmis"
           }
         }
       }
@@ -556,7 +544,7 @@
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Poista tulolähde"
+            "value" : "Poista tulonlähde"
           }
         }
       }
@@ -567,7 +555,7 @@
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Poistetaanko tämä tulolähde?"
+            "value" : "Poistetaanko tämä tulonlähde?"
           }
         }
       }
