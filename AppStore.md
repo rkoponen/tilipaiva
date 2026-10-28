@@ -40,11 +40,11 @@ Näe tulevat tilipäivät vilauksella.
 
 Montako päivää on seuraavaan maksuun? Tilipäivä vastaa.
 
-Päivät lasketaan suomalaisilla pankkipäiväsäännöillä: arkipäivät ilman pankkivapaapäiviä, pääsiäinen ja juhannus mukaan lukien.
+Päivät lasketaan suomalaisilla pankkipäiväsäännöillä.
 
 Lisää palkka tai Kelan etuus ja valitse sääntö. Kuukauden päivä, ensimmäinen tai viimeinen pankkipäivä, n:s viikonpäivä tai joka toinen viikko. Loput hoitaa sovellus.
 
-Widget näyttää jäljellä olevat päivät koti- ja lukitusnäytöllä. Maksupäivänä saat halutessasi muistutuksen, ja sovellus juhlii sitä konfetilla.
+Widget näyttää jäljellä olevat päivät koti- ja lukitusnäytöllä. Maksupäivänä saat halutessasi muistutuksen.
 
 Maksupäivät ovat arvioita. Tarkista ajantasainen tieto OmaKelasta.
 
@@ -52,20 +52,17 @@ Ei tilejä, ei mainoksia, ei tiedonkeruuta.
 
 ## Description (en)
 
-How many days until payday? Tilipäivä answers it at a glance.
+How many days until your next payment? Tilipäivä answers.
 
-Tilipäivä works out your next payment for you, and knows the Finnish banking-day rules: weekdays excluding bank holidays, Easter and Midsummer included. No more entering dates by hand every month.
+The dates are worked out with Finnish banking-day rules.
 
-- Your next payday as one big number and date
-- Salary and Kela benefits in one place
-- Flexible rules: day of month, first or last banking day, last weekday of the month, the Nth banking day, and the Nth weekday
-- Kela benefits: national pension, rehabilitation allowance and disability pension, child maintenance allowance, child benefit, study grant, child home care allowance, and flexible and partial care allowance
-- Home Screen and Lock Screen widgets
-- A reminder on the morning of a payment day
+Add a salary or a Kela benefit and pick a rule. A day of the month, the first or last banking day, the Nth weekday, or every other week. The app handles the rest.
+
+The widget shows the days left on your Home Screen and Lock Screen. On a payment day you can get a reminder, if you want one.
 
 Kela payment days are estimates. Always check the up-to-date information in OmaKela.
 
-Tilipäivä collects no data. Everything is calculated on your device.
+No accounts, no ads, no data collection.
 
 ## What's New (1.0)
 
